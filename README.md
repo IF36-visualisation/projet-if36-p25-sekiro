@@ -132,4 +132,20 @@ Cette mesure permet d’évaluer les progrès accomplis dans l’accès aux soin
   En suivant cette variable, il est possible de mesurer directement l’efficacité des systèmes de santé dans différentes régions du monde.
 
 
+11. Croissance démographique des pays émergents
+
+  Dans cette partie, nous chercherons à identifier les pays qui connaîtront une croissance démographique particulièrement rapide au cours du XXIe siècle.
+L’objectif est de mettre en évidence les États où la population pourrait doubler voire tripler dans les prochaines décennies, en s’appuyant sur les projections à long terme.
+Cette analyse met en lumière les futurs défis auxquels ces pays devront faire face, notamment en matière d’infrastructures, d’éducation et de gestion des ressources.
+
+
+12. Déclin démographique
+
+  À l’opposé des pays en forte croissance, certains États entrent dans une dynamique de déclin démographique, amorcée ou imminente.
+Nous chercherons à identifier ces pays, en observant les tendances de diminution de leur population totale.
+Ce phénomène est généralement lié à une faible natalité, un vieillissement avancé de la population, et parfois à des flux migratoires négatifs.
+Comprendre ces trajectoires permettra de mieux cerner les défis économiques et sociaux qui y sont associés.
+
+
+
 
