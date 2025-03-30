@@ -119,3 +119,17 @@ Nous observerons son évolution sur la période 1950–2100, afin d’identifier
   Cette question permet de mettre en évidence les transformations à venir du monde du travail, avec des conséquences sur le développement économique, la productivité et les équilibres sociaux.
 
 
+  9. Analyse des migrations nettes
+
+  L’objectif ici sera d’analyser les mouvements migratoires à l’échelle mondiale, en se concentrant sur le solde migratoire net (différence entre immigration et émigration) dans les différents pays.
+	 Cette analyse permettra de repérer les régions les plus attractives, ainsi que celles qui subissent une fuite importante de leur population, avec des dynamiques parfois durables et parfois cycliques.
+
+
+  10. Taux de mortalité infantile
+
+  Nous chercherons à analyser l’évolution du taux de mortalité infantile au fil des décennies, indicateur clé du niveau de développement sanitaire d’un pays.
+Cette mesure permet d’évaluer les progrès accomplis dans l’accès aux soins, à l’eau potable, à la nutrition, et plus globalement aux services essentiels pour les jeunes enfants.
+  En suivant cette variable, il est possible de mesurer directement l’efficacité des systèmes de santé dans différentes régions du monde.
+
+
+
