@@ -6,7 +6,7 @@
 
 
 
-### Introducyion
+### Introduction
 
 Nous avons choisi d’utiliser le jeu de données **“World Population Prospects”**, mis à disposition par l’**Organisation des Nations Unies** via leur site officiel : [https://population.un.org/wpp](https://population.un.org/wpp)
 
@@ -85,3 +85,15 @@ Voici les questions principales que nous souhaitons explorer :
     
   Nous nous intéresserons ensuite aux disparités entre les sexes en termes de démographie. Nous comparerons les espérances de vie des hommes et des femmes dans chaque pays, en mettant en avant les tendances régionales. Cela nous permettra d’identifier les écarts d’espérance de vie et d’analyser s’ils se réduisent ou s’amplifient au fil du temps.
   Nous visualisons comment la proportion d’hommes et de femmes varie selon les tranches d’âge et comment cette répartition évolue dans le temps.Cette analyse nous aidera à comprendre à quel moment les écarts deviennent significatifs (vieillissement, surmortalité masculine, etc.).
+
+  
+4.  Vieillissement de la population
+
+  Dans cette partie, nous nous intéresserons à l’évolution de la proportion de la population âgée de 65 ans et plus, à l’échelle mondiale, régionale et nationale. L’objectif sera d’identifier les pays confrontés à un vieillissement accéléré de leur population, et d’observer la vitesse à laquelle ce phénomène progresse selon les régions.
+  Nous visualiserons également les rapports de dépendance, en comparant la population active (15–64 ans) aux populations dépendantes (0–14 ans et 65+), afin d’évaluer les pressions futures sur les systèmes de retraite, de santé et de solidarité intergénérationnelle.
+
+
+  5.  Urbanisation et population rurale
+
+  L’objectif de cette section sera d’étudier les dynamiques de population entre les milieux urbains et ruraux. À l’aide des données disponibles, nous analyserons l’évolution de la proportion de la population vivant en zone urbaine, par pays et par région, entre 1950 et 2100.
+  Nous chercherons également à identifier les pays dans lesquels la croissance urbaine est la plus rapide, notamment via l’émergence de grandes métropoles (mégapoles).
