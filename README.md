@@ -159,4 +159,8 @@ Comprendre ces trajectoires permettra de mieux cerner les défis économiques et
 L’objectif est d’analyser si certains pays présentent un déséquilibre persistant ou croissant entre les sexes, et d’en comprendre les dynamiques : surmortalité masculine, préférences culturelles, migration genrée, etc.
 Cela permettra d’identifier les régions où l’équilibre démographique par sexe est le plus menacé ou au contraire le plus stable.
 
+15. Classement des pays par espérance de vie en 2100
 
+  Dans cette partie, nous chercherons à identifier les pays qui auront, selon les projections, l’espérance de vie la plus élevée à l’horizon 2100.
+L’objectif est de comparer les valeurs prévues pour un ensemble de pays représentatifs, afin de mettre en lumière les évolutions attendues en matière de longévité.
+Cette analyse permettra également de souligner les écarts persistants entre les différentes régions du monde, malgré les progrès globaux en santé publique.
