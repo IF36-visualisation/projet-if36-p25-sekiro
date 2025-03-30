@@ -97,3 +97,25 @@ Voici les questions principales que nous souhaitons explorer :
 
   L’objectif de cette section sera d’étudier les dynamiques de population entre les milieux urbains et ruraux. À l’aide des données disponibles, nous analyserons l’évolution de la proportion de la population vivant en zone urbaine, par pays et par région, entre 1950 et 2100.
   Nous chercherons également à identifier les pays dans lesquels la croissance urbaine est la plus rapide, notamment via l’émergence de grandes métropoles (mégapoles).
+
+
+  6. Espérance de vie et santé
+
+  Cette partie portera sur l’évolution de l’espérance de vie à la naissance, indicateur clé du développement et de la santé publique. Nous analyserons son évolution par région et par sexe, et nous chercherons à mettre en évidence les disparités persistantes entre pays du Nord et pays du Sud.
+L’analyse portera également sur la corrélation entre espérance de vie et développement socio-économique, en croisant les données avec des indices comme le PIB par habitant ou l’IDH.
+  Nous mettrons en lumière les progrès réalisés dans certaines régions, mais aussi les inégalités encore très marquées, notamment en Afrique subsaharienne ou dans certaines zones en conflit.
+
+
+  7. Structure par âge et dividende démographique
+
+  Nous chercherons à comprendre à quel moment une population entre dans une phase de dividende démographique, lorsque la part de la population en âge de travailler (15–64 ans) dépasse largement celle des jeunes (0–14 ans) et des personnes âgées (65+).
+  L’analyse portera sur l’évolution de la structure par âge au cours du temps, afin d’identifier les pays qui bénéficient ou bénéficieront d’une fenêtre démographique favorable à la croissance et au développement.
+
+
+  8.  Évolution de la population active
+
+  Cette partie s’intéressera exclusivement à la population active, définie ici comme les individus âgés de 15 à 64 ans.
+Nous observerons son évolution sur la période 1950–2100, afin d’identifier les pays qui verront cette tranche d’âge augmenter, stagner ou diminuer.
+  Cette question permet de mettre en évidence les transformations à venir du monde du travail, avec des conséquences sur le développement économique, la productivité et les équilibres sociaux.
+
+
