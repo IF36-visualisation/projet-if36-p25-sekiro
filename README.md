@@ -147,5 +147,16 @@ Ce phénomène est généralement lié à une faible natalité, un vieillissemen
 Comprendre ces trajectoires permettra de mieux cerner les défis économiques et sociaux qui y sont associés.
 
 
+13. Comparaison démographique par continent
+
+  Cette section portera sur la comparaison des évolutions démographiques des grandes régions du monde, afin d’identifier les continents qui concentreront la majeure partie de la croissance démographique au XXIe siècle.
+  L’objectif est d’analyser les écarts de dynamiques entre les zones en croissance rapide (notamment l’Afrique) et celles en stagnation ou en décroissance (comme l’Europe), dans une perspective de rééquilibrage du poids démographique mondial.
+
+
+14. Répartition hommes-femmes dans la population mondiale 
+
+  Cette partie visera à étudier l’évolution de la proportion d’hommes et de femmes dans la population totale au fil du temps.
+L’objectif est d’analyser si certains pays présentent un déséquilibre persistant ou croissant entre les sexes, et d’en comprendre les dynamiques : surmortalité masculine, préférences culturelles, migration genrée, etc.
+Cela permettra d’identifier les régions où l’équilibre démographique par sexe est le plus menacé ou au contraire le plus stable.
 
 
