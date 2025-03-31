@@ -126,6 +126,14 @@ Projections : 2024-2100 (modélisations SSP - Shared Socioeconomic Pathways)
   
 #### Plan d’analyse
 
+Avant de plonger dans l’analyse proprement dite, il est essentiel de commencer par une étape de nettoyage des données. Cela inclut la vérification de la qualité des données, le traitement des valeurs manquantes, et la gestion des anomalies éventuelles, telles que des valeurs erronées ou des colonnes vides. Nous pourrions également simplifier le jeu de données en conservant une seule colonne pour certaines informations redondantes, comme le code pays, afin de faciliter l’analyse.
+
+Il est important de noter que, durant cette phase, nous pourrions rencontrer des difficultés liées à des données manquantes ou des valeurs aberrantes, particulièrement pour certains pays où l'information pourrait être incomplète. Ces problèmes seront pris en compte et traités au fur et à mesure pour garantir la fiabilité des résultats.
+
+Une fois cette étape de nettoyage effectuée, nous pourrons commencer l’analyse proprement dite et explorer les tendances démographiques mondiales.
+
+---
+
 Ce jeu de données permet d’étudier en profondeur les dynamiques démographiques mondiales, passées et futures. Notre objectif principal est d’en extraire des tendances visuelles à l’échelle globale, régionale et nationale, et de les mettre en relation avec des enjeux actuels (vieillissement, natalité…).
 
 Voici les questions principales que nous souhaitons explorer :
