@@ -164,6 +164,7 @@ Cela permettra d’identifier les régions où l’équilibre démographique par
   Dans cette partie, nous chercherons à identifier les pays qui auront, selon les projections, l’espérance de vie la plus élevée à l’horizon 2100.
 L’objectif est de comparer les valeurs prévues pour un ensemble de pays représentatifs, afin de mettre en lumière les évolutions attendues en matière de longévité.
 Cette analyse permettra également de souligner les écarts persistants entre les différentes régions du monde, malgré les progrès globaux en santé publique.
+
 16. Impact des politiques migratoires sur la démographie mondiale
 
 Les politiques migratoires influencent fortement la dynamique démographique d'un pays. Cette question explore l'impact des politiques migratoires sur la population des pays au cours des dernières décennies et examine comment ces politiques affectent la croissance démographique à l’échelle mondiale, en particulier en comparant les pays avec des politiques migratoires restrictives et ceux avec des politiques plus ouvertes. Cette analyse pourrait révéler des tendances intéressantes concernant les migrations internationales, telles que les pays dont la population croît principalement en raison de l'immigration et ceux qui connaissent un déclin démographique en raison de l'émigration ou de politiques strictes. En croisant ces données avec des indicateurs économiques et sociaux, il serait possible de tirer des conclusions sur l'efficacité de ces politiques migratoires en matière de gestion démographique et de développement. 
