@@ -3,8 +3,8 @@ title: "World Population Prospects Stats (1950 - 2100)"
 author: "IF36 - SEKIRO (Othmane BEKKAL, Nicolas RIGOLAT, Robin NADAL, Zakaria ZAROUAL)"
 date: "UTT - P25"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ## Table des matières
@@ -102,24 +102,36 @@ Chaque localisation est identifiée de manière unique, facilitant l'agrégation
 
 # II. Plan d'analyse
 
+Voici les questions que nous avons élaboré pour pouvoir étudier notre jeu de données :
+
+### 2. Quels sont les 10 pays ayant connu les plus fortes croissances et décroissances démographiques entre 1950 et 2023 ?
+
+`Description :` Cette question vise à identifier les pays dont les populations ont enregistré les plus grandes variations, tant en termes de croissance que de décroissance, entre 1950 et 2023.
+
+`L'objectif :`L’objectif est de comprendre quels pays ont connu les plus fortes variations démographiques (croissances et décroissances) et, dans le même temps, d’examiner les causes possibles de ces changements. Ces éléments peuvent être liés à des facteurs tels que les migrations, les politiques de natalité, les crises économiques, ou même des phénomènes comme les guerres.
+
 <a id="section-4"></a>
 
 # III. Exploration
 
-```{r import, message=FALSE, warning=FALSE}
-library(tidyverse)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(readxl)
+library(dplyr)
 library(ggplot2)
-library("readxl")
-Dem_1950-2023 <- read_excel("./data/Dem_1950-2023.xlsx")
+library(tidyr)
+library(gridExtra)
+library(tidyverse)
+library(plotly)
+library(RColorBrewer)
 ```
-
 
 ## 1. Comment le taux de fécondité total (TFR) a-t-il évolué entre 1950 et 2023 dans les cinq continents ?
 
-**Hypothèse initiale** : Nous supposons que le TFR a globalement diminué sur tous les continents depuis 1950 avec des disparités régionales marquées (ex : déclin plus rapide en Europe qu'en Afrique). Le taux de fécondité total est le nombre d'enfant vivant à la naissance par femme. On ne compte pas ici l'indice de survie des enfants. Nous respecterons la division en continent de l'Amérique en quatre entités (South America, Central America, the Caribbean, and Northern America) faite par l'ONU dans ce dataset.
+Nous supposons que le TFR a globalement diminué sur tous les continents depuis 1950 avec des disparités régionales marquées (ex : déclin plus rapide en Europe qu'en Afrique). Le taux de fécondité total est le nombre d'enfant vivant à la naissance par femme. On ne compte pas ici l'indice de survie des enfants. Nous respecterons la division en continent de l'Amérique en quatre entités (South America, Central America, the Caribbean, and Northern America) faite par l'ONU dans ce dataset.
 
-### Visualisation
-```
+```{r echo=FALSE}
+Dem_1950_2023 <- read_excel("./data/Dem_1950-2023.xlsx")
 data <- Dem_1950_2023
 data_clean <- data %>%
   rename_with(tolower) %>%
@@ -155,7 +167,7 @@ ggplot(data_clean, aes(x = year, y = tfr, color = continent)) +
   )
 
 ```
-### Interprétation du graphique
+
 
 La baisse globale du TFR, passant de 4,7 en 1950 à 2,3 en 2023, dissimule des réalités hétérogènes en fonction du continent.
 
@@ -168,3 +180,231 @@ La baisse globale du TFR, passant de 4,7 en 1950 à 2,3 en 2023, dissimule des r
 &emsp; L’Océanie, avec un TFR moyen de 2,1, cache des fractures invisibles. L’Australie et la Nouvelle-Zélande (1,6) contrastent avec la Mélanésie, où la Papouasie-Nouvelle-Guinée maintient un TFR de 3,2. 
 
 &emsp; Du côté des Amériques, deux schémas sont présents. L'Amérique du Nord (Northen America ou Amérique septentrionale) composé des États-Unis, du Canada ainsi que des Bermudes (Royaume-Uni), du  Groenland (Danemark) et de Saint-Pierre-et-Miquelon (France), suit une courbe très proche de celle de l'Europe. Le reste des Amériques; centrale, du sud et les Caraïbes ; suivent une trajectoire similaire à l'Asie avec une baisse qui les emmène tous en dessous du seuil de renouvellement.
+
+
+### 2. Quels sont les 10 pays ayant connu les plus fortes croissances et décroissances démographiques entre 1950 et 2023 ?
+
+
+```{r echo=FALSE}
+# Chargement des données et nettoyage initial
+load_and_clean_data <- function() {
+  file_path <- "data/Dem_1950-2023.xlsx"
+  
+  data_estimates <- read_excel(file_path, sheet = "Estimates")
+  colnames(data_estimates) <- as.character(data_estimates[12, ])
+  
+  data_clean <- data_estimates[-(1:12), ] %>% 
+    rename(
+      Country = `Region, subregion, country or area *`,
+      Population = `Total Population, as of 1 January (thousands)`
+    ) %>%
+    mutate(
+      Year = as.character(Year),
+      Population = as.numeric(Population)
+    )
+  
+  return(data_clean)
+}
+
+# Filtrage pour ne garder que les pays (pas les régions)
+filter_countries_only <- function(data) {
+  data %>% filter(grepl("^[A-Za-z]", Country))
+}
+
+# CALCUL DES VARIATIONS DÉMOGRAPHIQUES ----
+calculate_population_growth <- function(data) {
+  data %>%
+    filter(Year %in% c("1950", "2023")) %>%
+    group_by(Country, Year) %>%
+    summarize(Population = sum(Population, na.rm = TRUE)) %>%
+    ungroup() %>%
+    pivot_wider(
+      names_from = Year,
+      values_from = Population,
+      names_prefix = "Population_"
+    ) %>%
+    mutate(
+      Population_1950 = as.numeric(Population_1950),
+      Population_2023 = as.numeric(Population_2023),
+      Population_Change = Population_2023 - Population_1950,
+      Percent_Change = ((Population_2023 - Population_1950) / Population_1950) * 100
+    ) %>%
+    filter(complete.cases(.))
+}
+
+# VISUALISATION - STYLE UNIFORME ----
+# Palette de couleurs cohérente
+get_distinct_colors <- function(n) {
+  colorRampPalette(brewer.pal(12, "Set3"))(n)
+}
+
+# Style commun pour tous les graphiques
+common_theme <- function() {
+  theme_minimal() +
+    theme(
+      axis.text.x = element_text(angle = 45, hjust = 1, size = 8, color = "black"),
+      axis.text.y = element_text(size = 8, color = "black"),
+      axis.title = element_text(size = 10, color = "black", face = "bold"),
+      legend.title = element_text(size = 9, face = "bold"),
+      legend.text = element_text(size = 8),
+      plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+      panel.grid.major = element_line(color = "gray90", linewidth = 0.2),
+      panel.grid.minor = element_blank()
+    )
+}
+
+# GRAPHIQUES EN BARRES ----
+
+create_styled_bar_plot <- function(data, title, y_label, fill_color) {
+  p <- ggplot(data, aes(x = reorder(Country, Percent_Change), y = Percent_Change, 
+                     text = paste("Pays:", Country, "<br>Changement:", round(Percent_Change, 1), "%"))) +
+    geom_bar(stat = "identity", fill = fill_color, color = "black", size = 0.2, width = 0.7) +
+    coord_flip() +
+    common_theme() +
+    labs(title = title, x = "Pays", y = y_label)
+  
+  # Rendre interactif avec les mêmes options de légende
+  ggplotly(p, tooltip = "text") %>%
+    layout(
+      legend = list(
+        bgcolor = "white",
+        bordercolor = "black",
+        borderwidth = 1,
+        title = list(text = "Pays")
+      ),
+      hoverlabel = list(
+        bgcolor = "white",
+        font = list(size = 10)
+      )
+    )
+}
+
+# GRAPHIQUES EN LIGNES ----
+create_styled_line_plot <- function(data, title) {
+  # Préparer les couleurs
+  countries <- unique(data$Country)
+  colors <- get_distinct_colors(length(countries))
+  names(colors) <- countries
+  
+  p <- ggplot(data, aes(x = as.numeric(Year), y = Population_Relative, 
+                       color = Country, group = Country,
+                       text = paste("Pays:", Country, "<br>Année:", Year, 
+                                  "<br>Population:", round(Population_Relative, 1), "%"))) +
+    geom_line(size = 1) +
+    geom_hline(yintercept = 100, linetype = "dashed", color = "gray50") +
+    scale_color_manual(values = colors) +
+    scale_x_continuous(breaks = seq(1950, 2023, by = 10)) +
+    scale_y_continuous(labels = scales::percent_format(scale = 1)) +
+    common_theme() +
+    labs(
+      title = title,
+      x = "Année",
+      y = "Population (% relative à 1950)",
+      color = "Pays"
+    )
+  
+  # Rendre interactif
+  ggplotly(p, tooltip = "text") %>%
+    layout(
+      legend = list(
+        bgcolor = "white",
+        bordercolor = "black",
+        borderwidth = 1,
+        title = list(text = "Pays")
+      ),
+      hoverlabel = list(
+        bgcolor = "white",
+        font = list(size = 10)
+      )
+    )
+}
+
+# EXÉCUTION PRINCIPALE ----
+data_clean <- load_and_clean_data()
+data_countries <- filter_countries_only(data_clean)
+data_growth <- calculate_population_growth(data_countries)
+
+# Top et bottom countries
+top_countries <- data_growth %>% 
+  arrange(desc(Percent_Change)) %>% 
+  head(10) %>% 
+  pull(Country)
+
+bottom_countries <- data_growth %>% 
+  arrange(Percent_Change) %>% 
+  head(10) %>% 
+  pull(Country)
+
+# Préparation des données relatives
+prepare_relative_data <- function(data_clean, countries) {
+  data_clean %>%
+    filter(Country %in% countries) %>%
+    group_by(Country) %>%
+    mutate(
+      Base_1950 = Population[Year == "1950"],
+      Population_Relative = ((Population / Base_1950) * 100) - 100
+    ) %>%
+    ungroup() %>%
+    filter(!is.na(Population_Relative))
+}
+
+# Création des graphiques
+top_growth_bar <- create_styled_bar_plot(
+  data_growth %>% filter(Country %in% top_countries),
+  "Top 10 Croissance Démographique Relative (1950-2023)",
+  "Changement (%)",
+  "#66C2A5"  # Couleur verte
+)
+
+bottom_decline_bar <- create_styled_bar_plot(
+  data_growth %>% filter(Country %in% bottom_countries),
+  "Top 10 Décroissance Démographique Relative (1950-2023)",
+  "Changement (%)",
+  "#FC8D62"  # Couleur orange
+)
+
+# Données pour les graphiques en lignes
+top_data_rel <- prepare_relative_data(data_clean, top_countries)
+bottom_data_rel <- prepare_relative_data(data_clean, bottom_countries)
+
+top_growth_line <- create_styled_line_plot(
+  top_data_rel,
+  "Évolution Relative des 10 Pays avec la Plus Forte Croissance (1950-2023)"
+)
+
+bottom_decline_line <- create_styled_line_plot(
+  bottom_data_rel,
+  "Évolution Relative des 10 Pays avec la Plus Forte Décroissance (1950-2023)"
+)
+
+
+```
+
+Dans cette partie, nous allons nous intéresser à la question suivante : 
+Quels sont les 10 pays ayant connu les plus fortes croissances et décroissances démographiques entre 1950 et 2023 ?
+
+Pour y répondre, nous avons tout d'abord chargé et nettoyé les données issues du fichier Dem_1950-2023.xlsx, qui regroupe les estimations de population par pays et par année. Nous avons principalement utilisé trois variables : le nom du pays (Country), l'année d'estimation (Year, de 1950 à 2023) et la population totale au 1er janvier (Population, en milliers d’habitants). Après avoir filtré pour ne garder que les vrais pays, nous avons extrait la population de 1950 et celle de 2023 pour chacun d’eux. Cela nous a permis de calculer le changement absolu (différence brute) ainsi que le changement relatif (en pourcentage) de la population sur cette période.
+
+Plutôt que de nous limiter à un calcul absolu de l'augmentation de population qui aurait favorisé mécaniquement les pays les plus peuplés nous avons choisi d'analyser la croissance relative.
+Cette approche nous permet de mieux saisir l'intensité des transformations démographiques, indépendamment de la taille initiale des pays.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+top_growth_bar
+bottom_decline_bar
+```
+
+En observant les deux graphiques, on peut dire qu'ils répondent bien à la question posée : analyser les pays ayant connu la plus forte croissance et décroissance démographique relative entre 1950 et 2023. Le premier graphique, avec une échelle horizontale sur le changement en pourcentage, montre que des pays comme les Émirats Arabes Unis (+14 000%) et le Qatar, dont la forte augmentation démographique peut être attribuée à des facteurs économiques tels que l’exploitation des ressources pétrolières, attirant ainsi une immigration massive. À l’inverse, le graphique de décroissance met en évidence des pays comme Montserrat (-66%) ou Niue (-59%),  où la diminution de population semble être liée à des catastrophes naturelles ou une émigration importante.
+Cependant, ces graphiques soulèvent également de nouvelles questions. Par exemple, l’exemple de l’Ukraine, avec une croissance  très modérée, pointe les effets des conflits géopolitiques sur les dynamiques démographiques
+
+Enfin, ces graphiques invitent à une réflexion sur l’évolution temporelle des populations. En étudiant plus en profondeur les changements démographiques sur plusieurs décennies, on pourrait comprendre précisément à quel moment ces transformations ont eu lieu, en fonction des événements mondiaux ou locaux. 
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+top_growth_line
+bottom_decline_line
+
+```
+En observant les graphiques en lignes des pays à forte croissance, on remarque que le Qatar et les Émirats Arabes Unis (UAE) ont vu leur population exploser après les années 1970. Cela pourrait être lié à l'exploitation des ressources pétrolières, attirant une main-d'œuvre étrangère.
+
+Concernant la décroissance démographique, l’Ukraine présente une tendance intéressante : après une légère croissance jusqu’en 1994, le déclin démographique s’est intensifié après 1991, potentiellement en raison de l'effondrement soviétique et de la crise économique qui en a résulté. La guerre récente pourrait expliquer l'accélération de cette décroissance à partir de 2021, avec des migrations forcées et une forte perte de population.La Lettonie, aussi issue de l'ex-URSS, montre une décroissance similaire après 1991
+
+En conclusion, ces graphiques répondent bien à la question posée et permettent d'observer les évolutions démographiques mondiales entre 1950 et 2023. Ils mettent en lumière des pays ayant connu une croissance ou une décroissance démographique significative. Si l’on s’attendait à voir davantage de pays africains parmi les résultats, cela pourrait être dû à la période choisie. Une analyse sur des périodes plus récentes pourrait révéler des tendances démographiques plus marquées en Afrique.
