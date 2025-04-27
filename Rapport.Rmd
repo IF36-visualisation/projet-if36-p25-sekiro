@@ -1,10 +1,18 @@
 ---
-title: "Rapport IF36 - SEKIRO"
-author: "Othmane BEKKAL, Nicolas RIGOLAT, Robin NADAL, Zakaria ZAROUAL"
+title: "World Population Prospects Stats (1950 - 2100)"
+author: "IF36 - SEKIRO (Othmane BEKKAL, Nicolas RIGOLAT, Robin NADAL, Zakaria ZAROUAL)"
+date: "UTT - P25"
 output:
   pdf_document: default
   html_document: default
 ---
+
+## Table des matières
+
+> [Introduction](#section-1) <br> [I. Données](#section-2) <br> [II. Plan d'analyse](#section-3) <br> [III. Exploration](#section-4) <br>
+
+<a id="section-1"></a>
+
 # Introduction
 &ensp;Nous avons choisi d’utiliser le jeu de données **“World Population Prospects”**, mis à disposition par l’**Organisation des Nations Unies** via leur site officiel : [https://population.un.org/wpp](https://population.un.org/wpp)
 
@@ -12,3 +20,88 @@ output:
 
 &ensp;Ces données contiennent des projections démographiques standardisées pour l’ensemble des pays du monde, couvrant la période de **1950 à 2100**. Les données de 1950 à 2023 sont des données issues de recensement de 238 pays/régions non-autonomes. Ce dataset constitue donc une source fiable, riche, et particulièrement pertinente dans un contexte de réflexion sur l’évolution des sociétés.
 
+<a id="section-2"></a>
+
+# I. Données
+
+Notre dataset est constitué de 15 fichiers CSV thématiques couvrant l'évolution démographique mondiale sous différentes facettes : population totale, fécondité, mortalité, migration, et bien d'autres. Il propose une exploration à travers quatre niveaux de granularité spatiale : mondial, régional, national, et urbain/rural. Les données sont également regroupées par tranches d'âge quinquennales, permettant une analyse fine de l'évolution au fil du temps.
+
+De plus, trois scénarios prospectifs (bas, moyen, haut) ont été élaborés selon les politiques natalistes des États, projetant ainsi plusieurs futurs possibles pour l'humanité.  
+Ce vaste ensemble contient **84 360 observations** réparties sur **42 variables**, offrant une base solide pour comprendre les dynamiques démographiques passées, présentes et futures.
+
+Chaque localisation est identifiée de manière unique, facilitant l'agrégation, la comparaison et l'interprétation des différentes séries temporelles disponibles.
+
+<details>
+<summary><b><font size="+1">Description des variables du dataset</font></b></summary>
+
+| Colonne         | Format      | Type de données | Description |
+|-----------------|-----------|-----------------|-------------|
+| **SortOrder**            | int      | Discrète | Ordre des lignes |
+| **LocID**                | int      | Discrète | Identifiant unique de la localisation |
+| **Notes**                | string (nullable) | Nominale | Informations additionnelles |
+| **ISO3_code**            | string (nullable) | Nominale | Code pays en 2 lettres selon la norme ISO 3166-1 alpha-3 |
+| **ISO2_code**            | string (nullable) | Nominale | Code pays en 2 lettres selon la norme ISO 3166-1 alpha-2 |
+| **SDMX_code**            | string (nullable) | Nominale | Code SDMX pour la localisation |
+| **LocTypeID**            | int      | Discrète | Type de la localisation |
+| **LocTypeName**          | string   | Nominale | Nom du type de localisation |
+| **ParentID**             | int (nullable) | Discrète | Identifiant du parent (si la localisation fait partie d'une région) |
+| **Location**             | string   | Nominale | Nom de la région/localisation |
+| **VarID**                | int      | Discrète | Identifiant de la variable |
+| **Variant**              | string   | Nominale | Type de scénario démographique (ex. Medium) |
+| **Time**                 | int      | Ordinale | Année |
+| **TPopulation1Jan**      | float    | Continue | Population totale au 1er janvier |
+| **TPopulation1July**     | float    | Continue | Population totale au 1er juillet |
+| **TPopulationMale1July** | float    | Continue | Population masculine au 1er juillet |
+| **TPopulationFemale1July** | float | Continue | Population féminine au 1er juillet |
+| **PopDensity**           | float    | Continue | Densité de population (habitants/km²) |
+| **PopSexRatio**          | float    | Continue | Ratio hommes/femmes |
+| **MedianAgePop**         | float    | Continue | Âge médian de la population |
+| **NatChange**           | float    | Continue | Changement naturel de la population |
+| **NatChangeRT**         | float    | Continue | Taux de changement naturel |
+| **PopChange**           | float    | Continue | Changement total de la population |
+| **PopGrowthRate**       | float    | Continue | Taux de croissance démographique |
+| **DoublingTime**        | float    | Continue | Temps de doublement de la population |
+| **Births**              | float    | Continue | Nombre total de naissances |
+| **Births1519**          | float    | Continue | Naissances chez les 15-19 ans |
+| **CBR**                 | float    | Continue | Taux brut de natalité (pour 1000 habitants) |
+| **TFR**                 | float    | Continue | Taux de fécondité total (nombre moyen d'enfants par femme) |
+| **NRR**                 | float    | Continue | Taux net de reproduction |
+| **MAC**                 | float    | Continue | Âge moyen de la maternité |
+| **SRB**                 | float    | Continue | Ratio de masculinité à la naissance (nombre de garçons pour 100 filles) |
+| **Deaths**              | float    | Continue | Nombre total de décès |
+| **DeathsMale**          | float    | Continue | Nombre de décès masculins |
+| **DeathsFemale**        | float    | Continue | Nombre de décès féminins |
+| **CDR**                 | float    | Continue | Taux brut de mortalité (pour 1000 habitants) |
+| **LEx**                 | float    | Continue | Espérance de vie à la naissance |
+| **LExMale**             | float    | Continue | Espérance de vie des hommes |
+| **LExFemale**           | float    | Continue | Espérance de vie des femmes |
+| **LE15**                | float    | Continue | Espérance de vie à 15 ans |
+| **LE15Male**            | float    | Continue | Espérance de vie des hommes à 15 ans |
+| **LE15Female**          | float    | Continue | Espérance de vie des femmes à 15 ans |
+| **LE65**                | float    | Continue | Espérance de vie à 65 ans |
+| **LE65Male**            | float    | Continue | Espérance de vie des hommes à 65 ans |
+| **LE65Female**          | float    | Continue | Espérance de vie des femmes à 65 ans |
+| **LE80**                | float    | Continue | Espérance de vie à 80 ans |
+| **LE80Male**            | float    | Continue | Espérance de vie des hommes à 80 ans |
+| **LE80Female**          | float    | Continue | Espérance de vie des femmes à 80 ans |
+| **InfantDeaths**        | float    | Continue | Nombre de décès infantiles |
+| **IMR**                 | float    | Continue | Taux de mortalité infantile (pour 1000 naissances vivantes) |
+| **LBsurvivingAge1**     | float    | Continue | Nombre d'enfants survivant jusqu'à 1 an |
+| **Under5Deaths**        | float    | Continue | Nombre de décès avant 5 ans |
+| **Q5**                  | float    | Continue | Probabilité de mourir avant 5 ans |
+| **Q0040, Q0040Male, Q0040Female** | float | Continue | Probabilité de mourir entre 0 et 40 ans (total, hommes, femmes) |
+| **Q0060, Q0060Male, Q0060Female** | float | Continue | Probabilité de mourir entre 0 et 60 ans (total, hommes, femmes) |
+| **Q1550, Q1550Male, Q1550Female** | float | Continue | Probabilité de mourir entre 15 et 50 ans (total, hommes, femmes) |
+| **Q1560, Q1560Male, Q1560Female** | float | Continue | Probabilité de mourir entre 15 et 60 ans (total, hommes, femmes) |
+| **NetMigrations**       | float    | Continue | Migration nette (immigrants - émigrants) |
+| **CNMR**               | float    | Continue | Taux net de migration (pour 1000 habitants) |
+
+</details>
+
+<a id="section-3"></a>
+
+# II. Plan d'analyse
+
+<a id="section-4"></a>
+
+# III. Exploration
