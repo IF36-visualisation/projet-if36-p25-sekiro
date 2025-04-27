@@ -3,8 +3,8 @@ title: "World Population Prospects Stats (1950 - 2100)"
 author: "IF36 - SEKIRO (Othmane BEKKAL, Nicolas RIGOLAT, Robin NADAL, Zakaria ZAROUAL)"
 date: "UTT - P25"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ## Table des matières
