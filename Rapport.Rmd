@@ -408,3 +408,70 @@ En observant les graphiques en lignes des pays à forte croissance, on remarque 
 Concernant la décroissance démographique, l’Ukraine présente une tendance intéressante : après une légère croissance jusqu’en 1994, le déclin démographique s’est intensifié après 1991, potentiellement en raison de l'effondrement soviétique et de la crise économique qui en a résulté. La guerre récente pourrait expliquer l'accélération de cette décroissance à partir de 2021, avec des migrations forcées et une forte perte de population.La Lettonie, aussi issue de l'ex-URSS, montre une décroissance similaire après 1991
 
 En conclusion, ces graphiques répondent bien à la question posée et permettent d'observer les évolutions démographiques mondiales entre 1950 et 2023. Ils mettent en lumière des pays ayant connu une croissance ou une décroissance démographique significative. Si l’on s’attendait à voir davantage de pays africains parmi les résultats, cela pourrait être dû à la période choisie. Une analyse sur des périodes plus récentes pourrait révéler des tendances démographiques plus marquées en Afrique.
+
+### 3. Quels sont les 10 pays avec les taux de mortalité infantile les plus faibles et les plus élevés en moyenne entre 2000 et 2023 ?
+
+Nous formulons l’hypothèse que le taux de mortalité infantile en 2023 est fortement corrélé au niveau de développement économique et sanitaire des pays.  
+Les pays en développement, notamment d’Afrique subsaharienne, devraient présenter des taux élevés en raison d’un accès limité aux soins médicaux, à la vaccination, et à une nutrition adéquate.  
+À l’inverse, les pays développés devraient afficher des taux très faibles, bénéficiant d’infrastructures de santé performantes, d’une meilleure hygiène de vie et d’une politique de prévention efficace.  
+Nous nous attendons ainsi à observer un écart important entre les pays les plus riches et les pays les plus pauvres.
+
+Afin de répondre à cette question, nous avons réalisé le graphique suivant à partir du jeu de données WPP 2024.
+
+```{r, message=FALSE, warning=FALSE}
+# Charger les librairies nécessaires
+library(dplyr)
+library(ggplot2)
+library(readr)
+# Ouvrir le fichier CSV
+df <- read_csv(file.choose())
+# Filtrer sur la variante "Medium" et les années 2000 à 2023
+df_infant <- df %>%
+  filter(Variant == "Medium",
+         Time >= 2000,
+         Time <= 2023)
+# Calculer la moyenne du taux de mortalité infantile (IMR) par pays
+df_infant_moyenne <- df_infant %>%
+  group_by(Location) %>%
+  summarise(moyenne_mortalite_infantile = mean(IMR, na.rm = TRUE))
+# Sélectionner les 10 pays ayant la mortalité infantile la plus élevée
+top10_high <- df_infant_moyenne %>%
+  arrange(desc(moyenne_mortalite_infantile)) %>%
+  head(10)
+# Sélectionner les 10 pays ayant la mortalité infantile la plus faible
+top10_low <- df_infant_moyenne %>%
+  arrange(moyenne_mortalite_infantile) %>%
+  head(10)
+# Fusionner les deux listes en ajoutant une catégorie
+top20_2023 <- bind_rows(
+  top10_high %>% mutate(Catégorie = "Taux élevé"),
+  top10_low %>% mutate(Catégorie = "Taux faible")
+)
+# Réaliser le graphique en barres
+ggplot(top20_2023, aes(x = reorder(Location, moyenne_mortalite_infantile), y = moyenne_mortalite_infantile, fill = Catégorie)) +
+  geom_col(width = 0.7) +
+  geom_text(aes(label = round(moyenne_mortalite_infantile, 1)), hjust = -0.1, size = 3) +
+  coord_flip(clip = "off") +
+  scale_fill_manual(values = c("Taux élevé" = "#E63946", "Taux faible" = "#2A9D8F")) +
+  labs(
+    title = "Comparaison des taux de mortalité infantile (2000-2023)",
+    x = "Pays",
+    y = "Taux moyen de mortalité infantile (pour 1000 naissances vivantes)",
+    fill = "Catégorie"
+  ) +
+  theme_minimal(base_family = "Arial") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    axis.text = element_text(size = 10),
+    axis.title = element_text(size = 12),
+    legend.title = element_text(size = 11),
+    legend.text = element_text(size = 9),
+    plot.margin = margin(10, 30, 10, 10)
+  )
+
+Le graphique met en évidence des écarts très marqués entre les pays en termes de mortalité infantile moyenne sur la période 2000-2023.  
+On observe que les pays présentant les taux les plus élevés sont principalement situés en Afrique subsaharienne, comme la Sierra Leone, le Nigéria ou le Tchad.  
+Ces taux élevés traduisent des défis persistants en matière d’accès aux soins prénatals, de couverture vaccinale, de nutrition infantile et d'infrastructures hospitalières.  
+À l’inverse, les pays affichant les taux les plus faibles, tels que l’Islande, Singapour ou Hong Kong, disposent de systèmes de santé robustes, d’un suivi médical généralisé dès la naissance, ainsi que d’importants programmes de prévention et d’éducation sanitaire.  
+Cet écart très marqué entre pays en développement et pays développés confirme notre hypothèse de départ : le niveau de développement économique, sanitaire et éducatif est un déterminant majeur du taux de mortalité infantile.  
+Ces résultats soulignent aussi l'importance des politiques publiques de santé dans la réduction des inégalités sanitaires à l'échelle mondiale.
