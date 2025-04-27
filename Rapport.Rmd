@@ -105,3 +105,66 @@ Chaque localisation est identifiée de manière unique, facilitant l'agrégation
 <a id="section-4"></a>
 
 # III. Exploration
+
+```{r import, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(ggplot2)
+library("readxl")
+Dem_1950-2023 <- read_excel("./data/Dem_1950-2023.xlsx")
+```
+
+
+## 1. Comment le taux de fécondité total (TFR) a-t-il évolué entre 1950 et 2023 dans les cinq continents ?
+
+**Hypothèse initiale** : Nous supposons que le TFR a globalement diminué sur tous les continents depuis 1950 avec des disparités régionales marquées (ex : déclin plus rapide en Europe qu'en Afrique). Le taux de fécondité total est le nombre d'enfant vivant à la naissance par femme. On ne compte pas ici l'indice de survie des enfants. Nous respecterons la division en continent de l'Amérique en quatre entités (South America, Central America, the Caribbean, and Northern America) faite par l'ONU dans ce dataset.
+
+### Visualisation
+```
+data <- Dem_1950_2023
+data_clean <- data %>%
+  rename_with(tolower) %>%
+  rename(
+    year = `...11`,
+    continent = `...3`,
+    tfr = `...27`
+  ) %>%
+  filter(!is.na(year), !is.na(continent), !is.na(tfr)) %>%
+  mutate(
+    year = as.integer(year),
+    tfr = as.numeric(tfr)
+  ) %>% filter(continent %in% c("Africa", "Asia", "Europe", "Northern America", "Caribbean", "Central America", "South America", "Oceania"))
+ggplot(data_clean, aes(x = year, y = tfr, color = continent)) +
+  geom_line(size = 1.2) +
+  geom_hline(yintercept=2.05,
+             color="black",
+             size=1)+
+  labs(title = "Évolution du taux de fécondité total (TFR) par continent",
+       x = "Année",
+       y = "Taux de fécondité total (TFR)",
+       color = "Continent",
+       caption="Le seuil de renouvellement générationel est représenté par la ligne horizontale noire") +
+  theme_minimal() +
+  scale_x_continuous(breaks = c(seq(1950,2020, by=5)))+
+  scale_y_continuous(expand = c(0,0), limits = c(0,7.5), breaks = c(seq(0,8, by=1)))+
+  theme(
+    plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+    axis.title = element_text(size = 14),
+    axis.text = element_text(size = 12),
+    legend.title = element_text(size = 14),
+    legend.text = element_text(size = 14)
+  )
+
+```
+### Interprétation du graphique
+
+La baisse globale du TFR, passant de 4,7 en 1950 à 2,3 en 2023, dissimule des réalités hétérogènes en fonction du continent.
+
+&emsp; En Afrique, le TFR a connu un déclin relatif mais inachevé, diminuant de 6,7 à 4,3 sur 73 ans. Cette transition lente peut s'expliquer par la persistance de normes pro-natalistes, par un accès limité à la contraception, la baisse faible de la mortalité infantile, divisée par quatre depuis 1950 qui n’a pas encore entraîné un ajustement proportionnel des comportements reproductifs (la seconde phase de la transition démographique).
+
+&emsp; En Europe, le TFR a continuellement baissé dès les années 1970 pour atteindre 1,5 en 2023. L'Europe est sous le seuil de renouvellement depuis 1975, sans immigration la population aurait largement diminué.
+
+&emsp;  On peut voir des données intéressantes des années 1950 à 1975. Si l'Amérique du Sud a une baisse continue et linéaire, l'Asie connaît des rebonds et de fortes baisses. En effet, l'année 1961, celle de la plus grande baisse, peut être corrélée avec la Grande famine chinoise (1959-1961). Mais sous cette moyenne se cache de grande disparité : dans six pays (Chine, Corée du Nord, Corée du Sud, Japon, Singapour, Thaïlande), la transition de la fécondité est largement achevée avec un nombre moyen d’enfants par femme qui est désormais inférieur au seuil de remplacement des génération. Le Japon, Singapour et la Corée du Sud se caractérisent même par des niveaux de fécondité parmi les plus bas au monde, inférieurs à 1,4 enfant par femme (faisant d’eux des ‘lowest-low’ fertility countries). La Chine, grâce à sa politique coercitive de l’enfant unique, a évité 400 millions de naissances, mais au prix d’un déséquilibre de genre historique. L’Inde, via des campagnes volontaristes comme "Us two, our two" (un couple, deux enfants), a réduit son TFR de 5,7 à 2,0.
+
+&emsp; L’Océanie, avec un TFR moyen de 2,1, cache des fractures invisibles. L’Australie et la Nouvelle-Zélande (1,6) contrastent avec la Mélanésie, où la Papouasie-Nouvelle-Guinée maintient un TFR de 3,2. 
+
+&emsp; Du côté des Amériques, deux schémas sont présents. L'Amérique du Nord (Northen America ou Amérique septentrionale) composé des États-Unis, du Canada ainsi que des Bermudes (Royaume-Uni), du  Groenland (Danemark) et de Saint-Pierre-et-Miquelon (France), suit une courbe très proche de celle de l'Europe. Le reste des Amériques; centrale, du sud et les Caraïbes ; suivent une trajectoire similaire à l'Asie avec une baisse qui les emmène tous en dessous du seuil de renouvellement.
