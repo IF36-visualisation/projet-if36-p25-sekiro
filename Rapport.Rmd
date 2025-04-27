@@ -419,7 +419,7 @@ Nous nous attendons ainsi à observer un écart important entre les pays les plu
 
 Afin de répondre à cette question, nous avons réalisé le graphique suivant à partir du jeu de données WPP 2024.
 
-```{r, message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 # Ouvrir le fichier CSV
 df <- read_csv("data/WPP2024_Demographic_Indicators_Medium.csv", show_col_types = FALSE)
 # Filtrer sur la variante "Medium" et les années 2000 à 2023
@@ -466,6 +466,7 @@ ggplot(top20_2023, aes(x = reorder(Location, moyenne_mortalite_infantile), y = m
     plot.margin = margin(10, 30, 10, 10)
   )
 ```
+
 Le graphique met en évidence des écarts très marqués entre les pays en termes de mortalité infantile moyenne sur la période 2000-2023.  
 On observe que les pays présentant les taux les plus élevés sont principalement situés en Afrique subsaharienne, comme la Sierra Leone, le Nigéria ou le Tchad.  
 Ces taux élevés traduisent des défis persistants en matière d’accès aux soins prénatals, de couverture vaccinale, de nutrition infantile et d'infrastructures hospitalières.  
