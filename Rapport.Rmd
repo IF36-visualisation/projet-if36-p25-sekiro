@@ -3,8 +3,8 @@ title: "World Population Prospects Stats (1950 - 2100)"
 author: "IF36 - SEKIRO (Othmane BEKKAL, Nicolas RIGOLAT, Robin NADAL, Zakaria ZAROUAL)"
 date: "UTT - P25"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ## Table des matières
@@ -370,12 +370,12 @@ bottom_data_rel <- prepare_relative_data(data_clean, bottom_countries)
 
 top_growth_line <- create_styled_line_plot(
   top_data_rel,
-  "Évolution Relative des 10 Pays avec la Plus Forte Croissance (1950-2023)"
+  "Évolution Relative des 10 Pays avec \nla Plus Forte Croissance (1950-2023)"
 )
 
 bottom_decline_line <- create_styled_line_plot(
   bottom_data_rel,
-  "Évolution Relative des 10 Pays avec la Plus Forte Décroissance (1950-2023)"
+  "Évolution Relative des 10 Pays avec \nla Plus Forte Décroissance (1950-2023)"
 )
 
 
