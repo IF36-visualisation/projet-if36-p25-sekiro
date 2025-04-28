@@ -602,7 +602,7 @@ ggplot(top15, aes(x = reorder(country, working_age_share),
 # Sauvegarde du graphique
 ggsave("top15_population_active.png", width = 10, height = 8, dpi = 300)
 
-'''
+```
 Le graphique obtenu montre que la population mondiale est effectivement très concentrée dans quelques grands pays.
 On observe que l’Inde et la Chine dominent largement, représentant à eux seuls une part considérable de la population mondiale, suivis par des pays comme les États-Unis, l’Indonésie, le Pakistan ou encore le Nigeria.
 
