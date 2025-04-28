@@ -563,13 +563,13 @@ data_2023 <- data_2023 %>%
     working_age_share = (total_pop / sum(total_pop, na.rm = TRUE)) * 100
   )
 
-# Sélection des 15 pays avec la plus forte part
-top15 <- data_2023 %>%
+# Sélection des 10 pays avec la plus forte part
+top10 <- data_2023 %>%
   arrange(desc(working_age_share)) %>%
-  head(15)
+  head(10)
 
 # Création du graphique
-ggplot(top15, aes(x = reorder(country, working_age_share), 
+ggplot(top10, aes(x = reorder(country, working_age_share), 
                   y = working_age_share)) +
   geom_col(fill = "#2A9D8F") +
   geom_text(aes(label = sprintf("%.2f%%", working_age_share)), 
@@ -577,7 +577,7 @@ ggplot(top15, aes(x = reorder(country, working_age_share),
             size = 3) +
   coord_flip() +
   labs(
-    title = "Top 15 des pays avec la plus forte part\nde population en 2023",
+    title = "Top 10 des pays avec la plus forte part\nde population en 2023",
     x = "",
     y = "Part de la population (%)"
   ) +
