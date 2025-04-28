@@ -187,7 +187,7 @@ La baisse globale du TFR, passant de 4,7 en 1950 à 2,3 en 2023, dissimule des r
 
 
 ```{r echo=FALSE}
-# Chargement des données et nettoyage initial
+#Data from excel
 load_and_clean_data <- function() {
   file_path <- "data/Dem_1950-2023.xlsx"
   
@@ -207,12 +207,11 @@ load_and_clean_data <- function() {
   return(data_clean)
 }
 
-# Filtrage pour ne garder que les pays (pas les régions)
 filter_countries_only <- function(data) {
   data %>% filter(grepl("^[A-Za-z]", Country))
 }
 
-# CALCUL DES VARIATIONS DÉMOGRAPHIQUES ----
+# Calcule var
 calculate_population_growth <- function(data) {
   data %>%
     filter(Year %in% c("1950", "2023")) %>%
@@ -233,13 +232,10 @@ calculate_population_growth <- function(data) {
     filter(complete.cases(.))
 }
 
-# VISUALISATION - STYLE UNIFORME ----
-# Palette de couleurs cohérente
 get_distinct_colors <- function(n) {
   colorRampPalette(brewer.pal(12, "Set3"))(n)
 }
 
-# Style commun pour tous les graphiques
 common_theme <- function() {
   theme_minimal() +
     theme(
@@ -254,7 +250,7 @@ common_theme <- function() {
     )
 }
 
-# GRAPHIQUES EN BARRES ----
+# Barres
 
 create_styled_bar_plot <- function(data, title, y_label, fill_color) {
   p <- ggplot(data, aes(x = reorder(Country, Percent_Change), y = Percent_Change, 
@@ -264,7 +260,6 @@ create_styled_bar_plot <- function(data, title, y_label, fill_color) {
     common_theme() +
     labs(title = title, x = "Pays", y = y_label)
   
-  # Rendre interactif avec les mêmes options de légende
   ggplotly(p, tooltip = "text") %>%
     layout(
       legend = list(
@@ -280,9 +275,8 @@ create_styled_bar_plot <- function(data, title, y_label, fill_color) {
     )
 }
 
-# GRAPHIQUES EN LIGNES ----
+# Graph en ligne
 create_styled_line_plot <- function(data, title) {
-  # Préparer les couleurs
   countries <- unique(data$Country)
   colors <- get_distinct_colors(length(countries))
   names(colors) <- countries
@@ -304,7 +298,6 @@ create_styled_line_plot <- function(data, title) {
       color = "Pays"
     )
   
-  # Rendre interactif
   ggplotly(p, tooltip = "text") %>%
     layout(
       legend = list(
@@ -320,12 +313,11 @@ create_styled_line_plot <- function(data, title) {
     )
 }
 
-# EXÉCUTION PRINCIPALE ----
+# Execution
 data_clean <- load_and_clean_data()
 data_countries <- filter_countries_only(data_clean)
 data_growth <- calculate_population_growth(data_countries)
 
-# Top et bottom countries
 top_countries <- data_growth %>% 
   arrange(desc(Percent_Change)) %>% 
   head(10) %>% 
@@ -336,7 +328,7 @@ bottom_countries <- data_growth %>%
   head(10) %>% 
   pull(Country)
 
-# Préparation des données relatives
+# Donnes relative
 prepare_relative_data <- function(data_clean, countries) {
   data_clean %>%
     filter(Country %in% countries) %>%
@@ -349,22 +341,22 @@ prepare_relative_data <- function(data_clean, countries) {
     filter(!is.na(Population_Relative))
 }
 
-# Création des graphiques
+# Graph
 top_growth_bar <- create_styled_bar_plot(
   data_growth %>% filter(Country %in% top_countries),
   "Top 10 Croissance Démographique Relative (1950-2023)",
   "Changement (%)",
-  "#66C2A5"  # Couleur verte
+  "#66C2A5"
 )
 
 bottom_decline_bar <- create_styled_bar_plot(
   data_growth %>% filter(Country %in% bottom_countries),
   "Top 10 Décroissance Démographique Relative (1950-2023)",
   "Changement (%)",
-  "#FC8D62"  # Couleur orange
+  "#FC8D62"
 )
 
-# Données pour les graphiques en lignes
+# Donnes graphes en lignes
 top_data_rel <- prepare_relative_data(data_clean, top_countries)
 bottom_data_rel <- prepare_relative_data(data_clean, bottom_countries)
 
@@ -493,11 +485,7 @@ Nous nous attendons donc à observer une forte concentration de la population mo
 
 Afin de répondre à cette question, nous avons réalisé le graphique suivant à partir du jeu de données **WPP 2024 (World Population Prospects)**, en se concentrant sur l’année 2023.
 
-```{r setup, message=FALSE, warning=FALSE}
-# Chargement des packages
-library(readxl)
-library(ggplot2)
-library(dplyr)
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 # Importation des données
 data <- read_excel("data/Dem_1950-2023.xlsx", skip = 16)
 
@@ -599,8 +587,6 @@ ggplot(top15, aes(x = reorder(country, working_age_share),
     axis.text = element_text(size = 10)
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.1)))
-# Sauvegarde du graphique
-ggsave("top15_population_active.png", width = 10, height = 8, dpi = 300)
 
 ```
 Le graphique obtenu montre que la population mondiale est effectivement très concentrée dans quelques grands pays.
