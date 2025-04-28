@@ -499,7 +499,7 @@ library(readxl)
 library(ggplot2)
 library(dplyr)
 # Importation des données
-data <- read_excel("C:/Users/zakam/IF36/Dem_1950-2023.xlsx", skip = 16)
+data <- read_excel("data/Dem_1950-2023.xlsx", skip = 16)
 
 # Sélection et conversion des colonnes pertinentes
 data <- data %>%
