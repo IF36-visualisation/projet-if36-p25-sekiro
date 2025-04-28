@@ -484,3 +484,126 @@ Ces taux élevés traduisent des défis persistants en matière d’accès aux s
 À l’inverse, les pays affichant les taux les plus faibles, tels que l’Islande, Singapour ou Hong Kong, disposent de systèmes de santé robustes, d’un suivi médical généralisé dès la naissance, ainsi que d’importants programmes de prévention et d’éducation sanitaire.  
 Cet écart très marqué entre pays en développement et pays développés confirme notre hypothèse de départ : le niveau de développement économique, sanitaire et éducatif est un déterminant majeur du taux de mortalité infantile.  
 Ces résultats soulignent aussi l'importance des politiques publiques de santé dans la réduction des inégalités sanitaires à l'échelle mondiale.
+
+## 4. Quels sont les 15 pays représentant la plus forte part de la population mondiale en 2023 ?
+
+Nous formulons l’hypothèse que la distribution de la population mondiale en 2023 est fortement concentrée dans quelques grands pays à forte démographie.  
+Des pays comme la Chine, l’Inde, les États-Unis ou l’Indonésie devraient figurer parmi les principaux contributeurs à la population mondiale en raison de leur immense taille démographique historique et de leur dynamique de croissance soutenue.  
+Nous nous attendons donc à observer une forte concentration de la population mondiale dans un nombre relativement restreint de pays.
+
+Afin de répondre à cette question, nous avons réalisé le graphique suivant à partir du jeu de données **WPP 2024 (World Population Prospects)**, en se concentrant sur l’année 2023.
+
+```{r setup, message=FALSE, warning=FALSE}
+# Chargement des packages
+library(readxl)
+library(ggplot2)
+library(dplyr)
+# Importation des données
+data <- read_excel("C:/Users/zakam/IF36/Dem_1950-2023.xlsx", skip = 16)
+
+# Sélection et conversion des colonnes pertinentes
+data <- data %>%
+  select(
+    country = `Region, subregion, country or area *`,
+    year = Year,
+    total_pop = `Total Population, as of 1 July (thousands)`
+  ) %>%
+  mutate(
+    total_pop = as.numeric(gsub(",", "", total_pop)),
+    year = as.numeric(year)
+  )
+
+# Suppression des agrégats régionaux
+data <- data %>%
+  filter(!country %in% c(
+    "World", 
+    "More developed regions", 
+    "Less developed regions",
+    "Least developed countries",
+    "Less developed regions, excluding least developed countries",
+    "High-income countries",
+    "Middle-income countries",
+    "Upper-middle-income countries",
+    "Lower-middle-income countries",
+    "Low-income countries",
+    "Low-and-middle-income countries",
+    "Less developed regions, excluding China",
+    "High-and-upper-middle-income countries",
+    "Low-and-Lower-middle-income countries",
+    "Europe, Northern America, Australia, and New Zealand",
+    "Land-locked Developing Countries (LLDC)",
+    "LLDC: Africa",
+    "LLDC: Asia",
+    "Sub-Saharan Africa",
+    "Northern Africa and Western Asia",
+    "Central and Southern Asia",
+    "Eastern and South-Eastern Asia",
+    "Latin America and the Caribbean",
+    "Oceania",
+    "Europe and Northern America",
+    "Asia",
+    "Africa",
+    "Europe",
+    "Northern America",
+    "Caribbean",
+    "Central America",
+    "South America",
+    "Eastern Europe",
+    "Northern Europe",
+    "Southern Europe",
+    "Western Europe",
+    "Eastern Africa",
+    "Middle Africa",
+    "Northern Africa",
+    "Southern Africa",
+    "Western Africa",
+    "Western Asia",
+    "Eastern Asia",
+    "South-Eastern Asia",
+    "Southern Asia",
+    "Melanesia",
+    "Micronesia",
+    "Polynesia"
+  ))
+# Filtrage pour l'année 2023
+data_2023 <- data %>%
+  filter(year == 2023)
+
+# Calcul de la part de la population mondiale
+data_2023 <- data_2023 %>%
+  mutate(
+    working_age_share = (total_pop / sum(total_pop, na.rm = TRUE)) * 100
+  )
+
+# Sélection des 15 pays avec la plus forte part
+top15 <- data_2023 %>%
+  arrange(desc(working_age_share)) %>%
+  head(15)
+
+# Création du graphique
+ggplot(top15, aes(x = reorder(country, working_age_share), 
+                  y = working_age_share)) +
+  geom_col(fill = "#2A9D8F") +
+  geom_text(aes(label = sprintf("%.2f%%", working_age_share)), 
+            hjust = -0.1, 
+            size = 3) +
+  coord_flip() +
+  labs(
+    title = "Top 15 des pays avec la plus forte part\nde population en 2023",
+    x = "",
+    y = "Part de la population (%)"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    axis.text = element_text(size = 10)
+  ) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)))
+# Sauvegarde du graphique
+ggsave("top15_population_active.png", width = 10, height = 8, dpi = 300)
+
+'''
+Le graphique obtenu montre que la population mondiale est effectivement très concentrée dans quelques grands pays.
+On observe que l’Inde et la Chine dominent largement, représentant à eux seuls une part considérable de la population mondiale, suivis par des pays comme les États-Unis, l’Indonésie, le Pakistan ou encore le Nigeria.
+
+Cette forte concentration est le reflet de tendances historiques : natalité élevée dans certaines régions, urbanisation massive, dynamiques économiques diverses, et transitions démographiques différenciées selon les pays.
