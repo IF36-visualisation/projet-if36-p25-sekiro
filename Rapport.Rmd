@@ -6,10 +6,11 @@ output:
   html_document: default
   pdf_document: default
 ---
+![](./images/Logo_of_the_United_Nations.png)
 
 ## Table des matières
 
-> [Introduction](#section-1) <br> [I. Données](#section-2) <br> [II. Plan d'analyse](#section-3) <br> [III. Exploration](#section-4) <br>
+> [Introduction](#section-1) <br> [I. Données](#section-2) <br> [II. Plan d'analyse](#section-3) <br> [III. Exploration](#section-4) <br> [IV. Annexe](#section-5) <br>
 
 <a id="section-1"></a>
 
@@ -102,13 +103,17 @@ Chaque localisation est identifiée de manière unique, facilitant l'agrégation
 
 # II. Plan d'analyse
 
-Voici les questions que nous avons élaboré pour pouvoir étudier notre jeu de données :
+Ce jeu de données permet d’étudier en profondeur les dynamiques démographiques mondiales, passées et futures. Notre objectif principal est d’en extraire des tendances visuelles à l’échelle globale, régionale et nationale, et de les mettre en relation avec des enjeux actuels (vieillissement, natalité…).
 
-### 2. Quels sont les 10 pays ayant connu les plus fortes croissances et décroissances démographiques entre 1950 et 2023 ?
 
-`Description :` Cette question vise à identifier les pays dont les populations ont enregistré les plus grandes variations, tant en termes de croissance que de décroissance, entre 1950 et 2023.
+### 1. Dynamiques démographiques différentielles
+  L’objectif de cette partie sera principalement d’observer les trajectoires démographiques historiques (1950-2023) et projetées (2024-2100) à travers les trois scénarios SSP. Il s’agira à la fois de visualiser par région l’évolution démographique mais aussi de visualiser les 3 scénarios du futur démographique (SSP1, SSP2, SSP3). On se servira de line charts multiples pour chercher des croissances et décroissances.
 
-`L'objectif :`L’objectif est de comprendre quels pays ont connu les plus fortes variations démographiques (croissances et décroissances) et, dans le même temps, d’examiner les causes possibles de ces changements. Ces éléments peuvent être liés à des facteurs tels que les migrations, les politiques de natalité, les crises économiques, ou même des phénomènes comme les guerres.
+### 2. Natalité, fécondité et Santé
+  L’un des piliers de la démographie est la natalité. Nous chercherons à comprendre comment elle a évolué au cours des 70 dernières années en analysant le Total Fertility Rate (TFR). Nous examinerons également la corrélation entre la mortalité infantile et la fécondité, en croisant ces données avec celles des grossesses adolescentes.
+
+### 3. Structure par âge et dividende démographique
+  Nous chercherons à comprendre à quel moment une population entre dans une phase de dividende démographique, lorsque la part de la population en âge de travailler (15–64 ans) dépasse largement celle des jeunes (0–14 ans) et des personnes âgées (65+). L’analyse portera sur l’évolution de la structure par âge au cours du temps, afin d’identifier les pays qui bénéficient ou bénéficieront d’une fenêtre démographique favorable à la croissance et au développement.
 
 <a id="section-4"></a>
 
@@ -589,7 +594,22 @@ ggplot(top10, aes(x = reorder(country, working_age_share),
   scale_y_continuous(expand = expansion(mult = c(0, 0.1)))
 
 ```
+
 Le graphique obtenu montre que la population mondiale est effectivement très concentrée dans quelques grands pays.
 On observe que l’Inde et la Chine dominent largement, représentant à eux seuls une part considérable de la population mondiale, suivis par des pays comme les États-Unis, l’Indonésie, le Pakistan ou encore le Nigeria.
 
 Cette forte concentration est le reflet de tendances historiques : natalité élevée dans certaines régions, urbanisation massive, dynamiques économiques diverses, et transitions démographiques différenciées selon les pays.
+
+<a id="section-5"></a>
+
+## IV. Annexe
+
+Pour la réalisation de ce projet, nous nous sommes réparties les taches de la manière suivante : 
+
+* Tous les membres du groupe ont travaillé conjointement sur la rédaction de la proposition Read.Me.
+* En ce qui concerne la partie exploration nous nous sommes répartis les questions de la manière suivante :
+	+ `Robin :` **1.** Comment le taux de fécondité total (TFR) a-t-il évolué entre 1950 et 2023 dans les cinq continents ? 
+  + `Othmane :` **2.** Quels sont les 10 pays ayant connu les plus fortes croissances et décroissances démographiques entre 1950 et 2023 ? 
+  + `Nicolas :` **3.** Quels sont les 10 pays avec les taux de mortalité infantile les plus faibles et les plus élevés en moyenne entre 2000 et 2023 ?
+  + `Zakaria :` **4.** Quels sont les 10 pays représentant la plus forte part de la population mondiale en 2023 ? 
+  
