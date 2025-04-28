@@ -477,7 +477,7 @@ Ces taux élevés traduisent des défis persistants en matière d’accès aux s
 Cet écart très marqué entre pays en développement et pays développés confirme notre hypothèse de départ : le niveau de développement économique, sanitaire et éducatif est un déterminant majeur du taux de mortalité infantile.  
 Ces résultats soulignent aussi l'importance des politiques publiques de santé dans la réduction des inégalités sanitaires à l'échelle mondiale.
 
-## 4. Quels sont les 15 pays représentant la plus forte part de la population mondiale en 2023 ?
+## 4. Quels sont les 10 pays représentant la plus forte part de la population mondiale en 2023 ?
 
 Nous formulons l’hypothèse que la distribution de la population mondiale en 2023 est fortement concentrée dans quelques grands pays à forte démographie.  
 Des pays comme la Chine, l’Inde, les États-Unis ou l’Indonésie devraient figurer parmi les principaux contributeurs à la population mondiale en raison de leur immense taille démographique historique et de leur dynamique de croissance soutenue.  
