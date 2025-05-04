@@ -51,69 +51,69 @@ Le dataset propose :
 -   Décès et mortalité (décès totaux, par sexe et age avec un focus sur la mortalité infantile) 
 -   Migration (nombre net et taux de migration nette)
 
-#### Description des variables du dataset
+### Description des variables du dataset
 
-| Colonne         | Type      | Description |
-|--------------------------|----------|------------|
-| **SortOrder**            | int      | Ordre des lignes |
-| **LocID**                | int      | Identifiant unique de la localisation |
-| **Notes**                | string (nullable) | Informations additionnelles |
-| **ISO3_code**            | string (nullable) | Code pays en 2 lettres selon la norme ISO 3166-1 alpha-3 |
-| **ISO2_code**            | string (nullable) | Code pays en 2 lettres selon la norme ISO 3166-1 alpha-2 |
-| **SDMX_code**            | string (nullable) | Code SDMX pour la localisation |
-| **LocTypeID**            | int      | Type de la localisation |
-| **LocTypeName**          | string   | Nom du type de localisation |
-| **ParentID**             | int (nullable) | Identifiant du parent (si la localisation fait partie d'une région) |
-| **Location**             | string   | Nom de la région/localisation |
-| **VarID**                | int      | Identifiant de la variable |
-| **Variant**              | string   | Type de scénario démographique (ex. Medium) |
-| **Time**                 | int      | Année |
-| **TPopulation1Jan**      | float    | Population totale au 1er janvier |
-| **TPopulation1July**     | float    | Population totale au 1er juillet |
-| **TPopulationMale1July** | float    | Population masculine au 1er juillet |
-| **TPopulationFemale1July** | float | Population féminine au 1er juillet |
-| **PopDensity**           | float    | Densité de population (habitants/km²) |
-| **PopSexRatio**          | float    | Ratio hommes/femmes |
-| **MedianAgePop**         | float    | Âge médian de la population |
-| **NatChange**           | float    | Changement naturel de la population |
-| **NatChangeRT**         | float    | Taux de changement naturel |
-| **PopChange**           | float    | Changement total de la population |
-| **PopGrowthRate**       | float    | Taux de croissance démographique |
-| **DoublingTime**        | float    | Temps de doublement de la population |
-| **Births**              | float    | Nombre total de naissances |
-| **Births1519**          | float    | Naissances chez les 15-19 ans |
-| **CBR**                 | float    | Taux brut de natalité (pour 1000 habitants) |
-| **TFR**                 | float    | Taux de fécondité total (nombre moyen d'enfants par femme) |
-| **NRR**                 | float    | Taux net de reproduction |
-| **MAC**                 | float    | Âge moyen de la maternité |
-| **SRB**                 | float    | Ratio de masculinité à la naissance (nombre de garçons pour 100 filles) |
-| **Deaths**              | float    | Nombre total de décès |
-| **DeathsMale**          | float    | Nombre de décès masculins |
-| **DeathsFemale**        | float    | Nombre de décès féminins |
-| **CDR**                 | float    | Taux brut de mortalité (pour 1000 habitants) |
-| **LEx**                 | float    | Espérance de vie à la naissance |
-| **LExMale**             | float    | Espérance de vie des hommes |
-| **LExFemale**           | float    | Espérance de vie des femmes |
-| **LE15**                | float    | Espérance de vie à 15 ans |
-| **LE15Male**            | float    | Espérance de vie des hommes à 15 ans |
-| **LE15Female**          | float    | Espérance de vie des femmes à 15 ans |
-| **LE65**                | float    | Espérance de vie à 65 ans |
-| **LE65Male**            | float    | Espérance de vie des hommes à 65 ans |
-| **LE65Female**          | float    | Espérance de vie des femmes à 65 ans |
-| **LE80**                | float    | Espérance de vie à 80 ans |
-| **LE80Male**            | float    | Espérance de vie des hommes à 80 ans |
-| **LE80Female**          | float    | Espérance de vie des femmes à 80 ans |
-| **InfantDeaths**        | float    | Nombre de décès infantiles |
-| **IMR**                 | float    | Taux de mortalité infantile (pour 1000 naissances vivantes) |
-| **LBsurvivingAge1**     | float    | Nombre d'enfants survivant jusqu'à 1 an |
-| **Under5Deaths**        | float    | Nombre de décès avant 5 ans |
-| **Q5**                  | float    | Probabilité de mourir avant 5 ans |
-| **Q0040, Q0040Male, Q0040Female** | float | Probabilité de mourir entre 0 et 40 ans (total, hommes, femmes) |
-| **Q0060, Q0060Male, Q0060Female** | float | Probabilité de mourir entre 0 et 60 ans (total, hommes, femmes) |
-| **Q1550, Q1550Male, Q1550Female** | float | Probabilité de mourir entre 15 et 50 ans (total, hommes, femmes) |
-| **Q1560, Q1560Male, Q1560Female** | float | Probabilité de mourir entre 15 et 60 ans (total, hommes, femmes) |
-| **NetMigrations**       | float    | Migration nette (immigrants - émigrants) |
-| **CNMR**               | float    | Taux net de migration (pour 1000 habitants) |
+| Colonne                      | Type               | Description                                                     | Nature    |
+|-----------------------------|--------------------|-----------------------------------------------------------------|-----------|
+| SortOrder                   | int                | Ordre des lignes                                                | Discrète  |
+| LocID                       | int                | Identifiant unique de la localisation                           | Discrète  |
+| Notes                       | string (nullable)  | Informations additionnelles                                     | Nominale  |
+| ISO3_code                   | string (nullable)  | Code pays en 3 lettres ISO 3166-1 alpha-3                       | Nominale  |
+| ISO2_code                   | string (nullable)  | Code pays en 2 lettres ISO 3166-1 alpha-2                       | Nominale  |
+| SDMX_code                   | string (nullable)  | Code SDMX pour la localisation                                  | Nominale  |
+| LocTypeID                   | int                | Type de la localisation                                         | Discrète  |
+| LocTypeName                 | string             | Nom du type de localisation                                     | Nominale  |
+| ParentID                    | int (nullable)     | Identifiant du parent                                           | Discrète  |
+| Location                    | string             | Nom de la région/localisation                                   | Nominale  |
+| VarID                       | int                | Identifiant de la variable                                      | Discrète  |
+| Variant                     | string             | Type de scénario démographique                                  | Nominale  |
+| Time                        | int                | Année                                                           | Discrète  |
+| TPopulation1Jan             | float              | Population totale au 1er janvier                                | Continue  |
+| TPopulation1July            | float              | Population totale au 1er juillet                                | Continue  |
+| TPopulationMale1July        | float              | Population masculine au 1er juillet                             | Continue  |
+| TPopulationFemale1July      | float              | Population féminine au 1er juillet                              | Continue  |
+| PopDensity                  | float              | Densité de population (hab/km²)                                 | Continue  |
+| PopSexRatio                 | float              | Ratio hommes/femmes                                             | Continue  |
+| MedianAgePop                | float              | Âge médian de la population                                     | Continue  |
+| NatChange                   | float              | Changement naturel de la population                             | Continue  |
+| NatChangeRT                 | float              | Taux de changement naturel                                      | Continue  |
+| PopChange                   | float              | Changement total de la population                               | Continue  |
+| PopGrowthRate               | float              | Taux de croissance démographique                                | Continue  |
+| DoublingTime                | float              | Temps de doublement de la population                            | Continue  |
+| Births                      | float              | Nombre total de naissances                                      | Continue  |
+| Births1519                  | float              | Naissances chez les 15-19 ans                                   | Continue  |
+| CBR                         | float              | Taux brut de natalité                                           | Continue  |
+| TFR                         | float              | Taux de fécondité total                                         | Continue  |
+| NRR                         | float              | Taux net de reproduction                                        | Continue  |
+| MAC                         | float              | Âge moyen de la maternité                                       | Continue  |
+| SRB                         | float              | Ratio de masculinité à la naissance                             | Continue  |
+| Deaths                      | float              | Nombre total de décès                                           | Continue  |
+| DeathsMale                  | float              | Nombre de décès masculins                                       | Continue  |
+| DeathsFemale                | float              | Nombre de décès féminins                                        | Continue  |
+| CDR                         | float              | Taux brut de mortalité                                          | Continue  |
+| LEx                         | float              | Espérance de vie à la naissance                                 | Continue  |
+| LExMale                     | float              | Espérance de vie des hommes                                     | Continue  |
+| LExFemale                   | float              | Espérance de vie des femmes                                     | Continue  |
+| LE15                        | float              | Espérance de vie à 15 ans                                       | Continue  |
+| LE15Male                    | float              | Espérance de vie des hommes à 15 ans                            | Continue  |
+| LE15Female                  | float              | Espérance de vie des femmes à 15 ans                            | Continue  |
+| LE65                        | float              | Espérance de vie à 65 ans                                       | Continue  |
+| LE65Male                    | float              | Espérance de vie des hommes à 65 ans                            | Continue  |
+| LE65Female                  | float              | Espérance de vie des femmes à 65 ans                            | Continue  |
+| LE80                        | float              | Espérance de vie à 80 ans                                       | Continue  |
+| LE80Male                    | float              | Espérance de vie des hommes à 80 ans                            | Continue  |
+| LE80Female                  | float              | Espérance de vie des femmes à 80 ans                            | Continue  |
+| InfantDeaths                | float              | Nombre de décès infantiles                                      | Continue  |
+| IMR                         | float              | Taux de mortalité infantile                                     | Continue  |
+| LBsurvivingAge1             | float              | Nombre d'enfants survivant jusqu'à 1 an                         | Continue  |
+| Under5Deaths                | float              | Nombre de décès avant 5 ans                                     | Continue  |
+| Q5                          | float              | Probabilité de mourir avant 5 ans                               | Continue  |
+| Q0040, Q0040Male, Q0040Female | float           | Probabilité de mourir entre 0 et 40 ans (total, hommes, femmes) | Continue  |
+| Q0060, Q0060Male, Q0060Female | float           | Probabilité de mourir entre 0 et 60 ans (total, hommes, femmes) | Continue  |
+| Q1550, Q1550Male, Q1550Female | float           | Probabilité de mourir entre 15 et 50 ans (total, hommes, femmes)| Continue  |
+| Q1560, Q1560Male, Q1560Female | float           | Probabilité de mourir entre 15 et 60 ans (total, hommes, femmes)| Continue  |
+| NetMigrations               | float              | Migration nette (immigrants - émigrants)                        | Continue  |
+| CNMR                        | float              | Taux net de migration                                           | Continue  |
 
 
 ---  
