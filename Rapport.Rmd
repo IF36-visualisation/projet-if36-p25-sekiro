@@ -727,6 +727,73 @@ La **République Démocratique du Congo** se distingue par une **croissance cont
 
 Ce graphique confirme donc non seulement **l’ampleur des croissances prévues**, mais aussi **la diversité des trajectoires**, reflet des différences en termes de **politiques publiques**, de **développement économique**, de **transition sanitaire**, et de **fécondité**.
 
+## 6. Quel est l'âge médian des populations par pays en 2023 ?
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# 1. Chargement et nettoyage
+load_and_clean_median_age <- function() {
+  file_path <- "data/Dem_1950-2023.xlsx"
+  data_estimates <- read_excel(file_path, sheet = "Estimates")
+  colnames(data_estimates) <- as.character(data_estimates[12, ])
+  
+  data_clean <- data_estimates[-(1:12), ] %>%
+    rename(
+      Country = `Region, subregion, country or area *`,
+      MedianAge = `Median Age (years)`,
+      Year = Year
+    ) %>%
+    mutate(
+      Year = as.character(Year),
+      MedianAge = as.numeric(MedianAge)
+    )
+  
+  return(data_clean)
+}
+
+# 2. Filtrer que les pays et l'année 2023
+filter_median_age_2023 <- function(data) {
+  data %>%
+    filter(grepl("^[A-Za-z]", Country)) %>%
+    filter(Year == "2023") %>%
+    filter(!is.na(MedianAge))
+}
+
+# 3. Charger les données géographiques du monde (GeoJSON ou shape file simplifié)
+load_world_map <- function() {
+  map_data("world") %>%
+    rename(Country = region)
+}
+
+# 4. Fusionner les données géographiques avec les âges médians
+prepare_map_data <- function(map_data, median_age_data) {
+  left_join(map_data, median_age_data, by = "Country")
+}
+
+# 5. Tracer la carte avec ggplot2
+plot_median_age_map <- function(map_data) {
+  ggplot(map_data, aes(long, lat, group = group, fill = MedianAge, text = paste(Country, "<br>Âge médian:", MedianAge))) +
+    geom_polygon(color = "gray80", size = 0.2) +
+    scale_fill_viridis_c(option = "plasma", direction = -1, name = "Âge médian") +
+    theme_void() +
+    labs(title = "Âge Médian par Pays en 2023") +
+    theme(
+      plot.title = element_text(hjust = 0.5, face = "bold"),
+      legend.title = element_text(size = 10, face = "bold"),
+      legend.text = element_text(size = 8)
+    )
+}
+
+# 6. Exécution
+median_age_data <- load_and_clean_median_age()
+median_age_2023 <- filter_median_age_2023(median_age_data)
+world_map <- load_world_map()
+map_final <- prepare_map_data(world_map, median_age_2023)
+
+# 7. Affichage interactif
+ggplotly(plot_median_age_map(map_final), tooltip = "text")
+
+```
+
+
 ---
 
 En **conclusion**, cette **double analyse visuelle** met en lumière un **basculement potentiel de la carte démographique mondiale** au profit de l’**Afrique subsaharienne**.  
