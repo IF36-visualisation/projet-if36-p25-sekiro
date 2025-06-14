@@ -602,6 +602,141 @@ Cette forte concentration est le reflet de tendances historiques : natalité él
 
 <a id="section-5"></a>
 
+
+## 5. Quels pays connaîtront la plus forte croissance démographique entre 2023 et 2100 ?
+
+Nous faisons l’hypothèse que les pays à plus forte croissance démographique d’ici 2100 seront majoritairement situés en **Afrique subsaharienne**, du fait d’un **taux de fécondité élevé**, d’une **population jeune**, et d’un **début de transition démographique plus récent**.  
+Ces pays bénéficient en effet d’une **dynamique de croissance naturelle importante**, combinée à une **amélioration progressive des conditions de vie** (santé, éducation, urbanisation).
+
+Afin de répondre à cette question, nous avons utilisé les **projections issues du scénario moyen** du rapport *World Population Prospects 2024* publié par l’ONU.  
+Ce scénario prend en compte une hypothèse **modérée de baisse de la fécondité** et de l’**augmentation de l’espérance de vie**.
+
+Le premier graphique ci-dessous présente les **10 pays** qui connaîtront la **plus forte augmentation de population en valeur absolue** entre 2023 et 2100 *(en millions d’habitants)* :
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Chargement des données
+df <- read_csv("data/WPP2024_Demographic_Indicators_Medium.csv", show_col_types = FALSE)
+
+# Conversion en millions
+top10_croissance_mod <- top10_croissance %>%
+  mutate(Croissance_M = Croissance / 1000)
+
+# Graphique
+ggplot(top10_croissance_mod, aes(x = reorder(Country, Croissance_M), y = Croissance_M)) +
+  geom_col(fill = "#2a9d8f") +
+  geom_text(aes(label = comma(round(Croissance_M, 1))), hjust = -0.1, size = 4) +
+  coord_flip() +
+  labs(
+    title = "Top 10 des pays à plus forte croissance démographique",
+    subtitle = "Période : 2023 à 2100 (scénario moyen - ONU WPP 2024)",
+    x = "",
+    y = "Croissance de la population (en millions)",
+    caption = "Source : World Population Prospects 2024 - United Nations"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
+    plot.subtitle = element_text(hjust = 0.5, size = 11, face = "italic"),
+    plot.caption = element_text(size = 9, face = "italic"),
+    axis.text = element_text(size = 10)
+  ) +
+  scale_y_continuous(labels = comma, expand = expansion(mult = c(0, 0.1)))
+
+```
+
+On observe que les **projections confirment largement notre hypothèse** :  
+7 des 10 pays affichant la plus forte croissance démographique sont **africains**, avec la **République Démocratique du Congo** en tête (**+325 millions d’habitants**), suivie par le **Pakistan** (**+264 M**) et le **Nigeria** (**+249 M**).  
+Ce classement illustre l’importance des **transitions démographiques différées** dans ces régions, ainsi que le **potentiel de croissance massive** qu'elles représentent.
+
+Cette croissance rapide soulève des **enjeux majeurs** : **sécurité alimentaire, urbanisation, emploi, accès à l’éducation et aux soins**…  
+Les États devront mettre en place des **politiques ambitieuses** pour accompagner cette évolution, tout en tirant parti de l’opportunité représentée par une **population jeune**.
+
+Pour affiner cette lecture, le graphique suivant représente l’évolution de la population des 3 pays en tête du classement, entre 2023 et 2100.
+Il permet de mieux percevoir les écarts de trajectoires, au-delà des seules valeurs finales :
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Chargement des données
+df <- read_csv("data/WPP2024_Demographic_Indicators_Medium.csv", show_col_types = FALSE)
+
+# Sélection des 3 pays
+top3 <- c("Democratic Republic of the Congo", "Pakistan", "Nigeria")
+
+# Préparation des données
+df_top3 <- df %>%
+  filter(
+    Variant == "Medium",
+    Location %in% top3,
+    Time >= 2023, Time <= 2100
+  ) %>%
+  select(Année = Time, Pays = Location, Population = TPopulation1July) %>%
+  mutate(Population = Population / 1e6)  # conversion en millions
+
+# Données pour les annotations de fin
+df_2100 <- df_top3 %>% filter(Année == 2100) %>%
+  mutate(
+    label = case_when(
+      Pays == "Pakistan" ~ "511 M",
+      Pays == "Nigeria" ~ "487 M",
+      Pays == "Democratic Republic of the Congo" ~ "435 M"
+    ),
+    vjust = case_when(
+      Pays == "Pakistan" ~ -0.5,
+      Pays == "Nigeria" ~ 0.5,
+      Pays == "Democratic Republic of the Congo" ~ 1.2
+    )
+  )
+
+# Couleurs personnalisées
+couleurs <- c(
+  "Democratic Republic of the Congo" = "#e07b39",
+  "Pakistan" = "#ea6753",
+  "Nigeria" = "#7248b3"
+)
+
+# Création du graphique
+ggplot(df_top3, aes(x = Année, y = Population, color = Pays)) +
+  geom_line(size = 1.2) +
+  scale_color_manual(values = couleurs) +
+  labs(
+    title = "Évolution de la population (Top 3 croissance)",
+    subtitle = "Projection démographique 2023–2100 (scénario moyen)",
+    x = "Année",
+    y = "Population (en millions)"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16),
+    plot.subtitle = element_text(face = "italic", hjust = 0.5, size = 12),
+    axis.title = element_text(size = 11),
+    legend.title = element_blank(),
+    legend.position = "top",
+    legend.text = element_text(size = 10),
+    plot.margin = margin(10, 30, 10, 10)
+  ) +
+  geom_text(
+    data = df_2100,
+    aes(label = label, vjust = vjust),
+    hjust = 0,
+    size = 4.5,
+    show.legend = FALSE
+  ) +
+  coord_cartesian(clip = "off")
+```
+La **République Démocratique du Congo** se distingue par une **croissance continue et particulièrement rapide** tout au long du siècle, dépassant largement les **300 millions d’habitants en 2100**.  
+À l’inverse, le **Pakistan** et le **Nigeria** présentent des **dynamiques plus modérées**, avec un certain **ralentissement attendu à partir de 2080**.
+
+Ce graphique confirme donc non seulement **l’ampleur des croissances prévues**, mais aussi **la diversité des trajectoires**, reflet des différences en termes de **politiques publiques**, de **développement économique**, de **transition sanitaire**, et de **fécondité**.
+
+---
+
+En **conclusion**, cette **double analyse visuelle** met en lumière un **basculement potentiel de la carte démographique mondiale** au profit de l’**Afrique subsaharienne**.  
+Ces projections incitent à réfléchir dès aujourd’hui aux **politiques à adopter** pour **transformer cette croissance en levier de développement durable**.
+
+
+
+
+
+
 ## IV. Annexe
 
 Pour la réalisation de ce projet, nous nous sommes réparties les taches de la manière suivante : 
