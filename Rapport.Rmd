@@ -729,17 +729,21 @@ Ce graphique confirme donc non seulement **l’ampleur des croissances prévues*
 
 ## 6. Quel est l'âge médian des populations par pays en 2023 ?
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-# 1. Chargement et nettoyage
+# 1. Charger et nettoyer les données d'âge médian
 load_and_clean_median_age <- function() {
   file_path <- "data/Dem_1950-2023.xlsx"
-  data_estimates <- read_excel(file_path, sheet = "Estimates")
-  colnames(data_estimates) <- as.character(data_estimates[12, ])
+  raw_data <- read_excel(file_path, sheet = "Estimates")
   
-  data_clean <- data_estimates[-(1:12), ] %>%
+  # Corriger les noms de colonnes
+  colnames(raw_data) <- as.character(raw_data[12, ])
+  data <- raw_data[-(1:12), ]
+  
+  # Nettoyage
+  data_clean <- data %>%
     rename(
       Country = `Region, subregion, country or area *`,
-      MedianAge = `Median Age (years)`,
-      Year = Year
+      Year = Year,
+      MedianAge = `Median Age, as of 1 July (years)`
     ) %>%
     mutate(
       Year = as.character(Year),
@@ -749,28 +753,47 @@ load_and_clean_median_age <- function() {
   return(data_clean)
 }
 
-# 2. Filtrer que les pays et l'année 2023
+# 2. Filtrer pour l'année 2023 et pays uniquement
 filter_median_age_2023 <- function(data) {
   data %>%
     filter(grepl("^[A-Za-z]", Country)) %>%
-    filter(Year == "2023") %>%
-    filter(!is.na(MedianAge))
+    filter(Year == "2023", !is.na(MedianAge))
 }
 
-# 3. Charger les données géographiques du monde (GeoJSON ou shape file simplifié)
+# 3. Charger la carte du monde
 load_world_map <- function() {
-  map_data("world") %>%
-    rename(Country = region)
+  map_data("world") %>% rename(Country_map = region)
 }
 
-# 4. Fusionner les données géographiques avec les âges médians
-prepare_map_data <- function(map_data, median_age_data) {
-  left_join(map_data, median_age_data, by = "Country")
+# 4. Harmoniser les noms de pays (partiel, à ajuster au besoin)
+harmonize_country_names <- function(df) {
+  df %>%
+    mutate(Country = case_when(
+      Country == "United States of America" ~ "USA",
+      Country == "United Kingdom" ~ "UK",
+      Country == "Democratic Republic of the Congo" ~ "Democratic Republic of Congo",
+      Country == "Côte d’Ivoire" ~ "Ivory Coast",
+      Country == "Viet Nam" ~ "Vietnam",
+      Country == "Russian Federation" ~ "Russia",
+      Country == "Syrian Arab Republic" ~ "Syria",
+      Country == "Republic of Korea" ~ "South Korea",
+      Country == "Republic of Moldova" ~ "Moldova",
+      Country == "Iran (Islamic Republic of)" ~ "Iran",
+      Country == "Lao People's Democratic Republic" ~ "Laos",
+      Country == "Venezuela (Bolivarian Republic of)" ~ "Venezuela",
+      TRUE ~ Country
+    ))
 }
 
-# 5. Tracer la carte avec ggplot2
+# 5. Fusionner les cartes
+prepare_map_data <- function(map_df, median_df) {
+  left_join(map_df, median_df, by = c("Country_map" = "Country"))
+}
+
+# 6. Tracer la carte
 plot_median_age_map <- function(map_data) {
-  ggplot(map_data, aes(long, lat, group = group, fill = MedianAge, text = paste(Country, "<br>Âge médian:", MedianAge))) +
+  ggplot(map_data, aes(long, lat, group = group, fill = MedianAge, 
+                       text = paste0(Country_map, "<br>Âge médian : ", MedianAge))) +
     geom_polygon(color = "gray80", size = 0.2) +
     scale_fill_viridis_c(option = "plasma", direction = -1, name = "Âge médian") +
     theme_void() +
@@ -782,15 +805,16 @@ plot_median_age_map <- function(map_data) {
     )
 }
 
-# 6. Exécution
+# 7. Exécution complète
 median_age_data <- load_and_clean_median_age()
-median_age_2023 <- filter_median_age_2023(median_age_data)
+median_age_2023 <- filter_median_age_2023(median_age_data) %>%
+  harmonize_country_names()
+
 world_map <- load_world_map()
 map_final <- prepare_map_data(world_map, median_age_2023)
 
-# 7. Affichage interactif
+# 8. Affichage interactif
 ggplotly(plot_median_age_map(map_final), tooltip = "text")
-
 ```
 
 
