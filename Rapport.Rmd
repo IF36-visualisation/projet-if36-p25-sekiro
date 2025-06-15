@@ -799,7 +799,9 @@ ggplotly(plot_median_age_map(map_final), tooltip = "text")
 En **conclusion**, cette **double analyse visuelle** met en lumière un **basculement potentiel de la carte démographique mondiale** au profit de l’**Afrique subsaharienne**.  
 Ces projections incitent à réfléchir dès aujourd’hui aux **politiques à adopter** pour **transformer cette croissance en levier de développement durable**.
 
+## 7. Évolution de l’espérance de vie à la naissance dans le monde (1950–2100)
 
+Nous posons l’hypothèse qu’à l’échelle mondiale, l’espérance de vie à la naissance suit une progression quasi-continue depuis 1950. Cette évolution serait principalement due aux avancées médicales, à la généralisation des campagnes de vaccination, à l’amélioration des conditions sanitaires et à l’élévation du niveau de vie dans de nombreuses régions. D’après les projections démographiques, cette tendance devrait se poursuivre jusqu’en 2100, bien qu’à un rythme plus lent. En effet, les gains d’espérance de vie deviennent de plus en plus difficiles à obtenir à mesure que les seuils élevés sont atteints.
 
 
 
