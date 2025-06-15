@@ -801,8 +801,76 @@ Ces projections incitent à réfléchir dès aujourd’hui aux **politiques à a
 
 ## 7. Évolution de l’espérance de vie à la naissance dans le monde (1950–2100)
 
-Nous posons l’hypothèse qu’à l’échelle mondiale, l’espérance de vie à la naissance suit une progression quasi-continue depuis 1950. Cette évolution serait principalement due aux avancées médicales, à la généralisation des campagnes de vaccination, à l’amélioration des conditions sanitaires et à l’élévation du niveau de vie dans de nombreuses régions. D’après les projections démographiques, cette tendance devrait se poursuivre jusqu’en 2100, bien qu’à un rythme plus lent. En effet, les gains d’espérance de vie deviennent de plus en plus difficiles à obtenir à mesure que les seuils élevés sont atteints.
+Nous avons émis l’hypothèse que l’espérance de vie à la naissance augmente de manière continue à l’échelle mondiale depuis 1950. Cette progression serait principalement due aux avancées médicales (vaccins, antibiotiques, chirurgie), à l’amélioration de l’hygiène, à la diminution de la mortalité infantile, à une meilleure nutrition, et plus largement, à la transition épidémiologique.
+Nous supposons également que cette croissance se poursuivra jusqu’en 2100, mais à un rythme ralenti, car les gains deviennent plus difficiles à mesure que l'on approche des limites biologiques humaines.
 
+Pour confronter cette hypothèse à la réalité des données, nous avons sélectionné les projections issues du scénario moyen (Medium) fournies par la base World Population Prospects 2024 de l’ONU, couvrant l’évolution mondiale de l’espérance de vie de 1950 à 2100.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Chargement des données
+df <- read_csv("data/WPP2024_Demographic_Indicators_Medium.csv", show_col_types = FALSE)
+
+# Filtrage pour le monde, scénario moyen
+df_life <- df %>%
+  filter(Location == "World", Variant == "Medium") %>%
+  select(Année = Time, EsperanceVie = LEx) %>%
+  filter(!is.na(EsperanceVie))
+
+# Réduire les points visibles à tous les 5 ans
+df_points <- df_life %>% filter(Année %% 5 == 0)
+
+# Tracer le graphique
+ggplot(df_life, aes(x = Année, y = EsperanceVie)) +
+  geom_line(color = "#264653", linewidth = 1.2) +
+  geom_point(data = df_points, aes(x = Année, y = EsperanceVie), 
+             shape = 21, fill = "white", color = "#264653", size = 2) +
+  
+  # Séparation historique / projections
+  geom_vline(xintercept = 2023, linetype = "dashed", color = "gray40") +
+  annotate("text", x = 1985, y = 87, label = "Historique", size = 4, fontface = "bold") +
+  annotate("text", x = 2060, y = 87, label = "Projections", size = 4, fontface = "bold") +
+  
+  # Annotations ajustées
+  annotate("text", x = 1955, y = 45.3, label = "47 ans (1950)", hjust = 0, size = 3.5, color = "#264653") +
+  annotate("text", x = 2085, y = 83, label = "82 ans (2100)", hjust = 1, size = 3.5, color = "#264653") +
+  
+  # Titres et axes
+  labs(
+    title = "Évolution de l'espérance de vie à la naissance dans le monde",
+    subtitle = "Période : 1950 à 2100 — scénario moyen (ONU WPP 2024)",
+    x = "Année",
+    y = "Espérance de vie (en années)",
+    caption = "Source : World Population Prospects 2024 - United Nations"
+  ) +
+  theme_classic() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 15, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, size = 11, face = "italic"),
+    axis.title = element_text(size = 12, face = "bold"),
+    axis.text = element_text(size = 11),
+    plot.caption = element_text(size = 9, face = "italic")
+  ) +
+  scale_y_continuous(labels = comma, limits = c(45, 90)) +
+  scale_x_continuous(breaks = seq(1950, 2100, 10))
+```
+Le graphique obtenu confirme clairement notre hypothèse :
+
+En 1950, l’espérance de vie mondiale à la naissance s’élevait à 47 ans.
+En 2023, elle atteint environ 73 ans, soit un gain impressionnant de 26 ans en un peu plus de 70 ans.
+D’ici 2100, les projections estiment qu’elle atteindra 82 ans, traduisant une hausse supplémentaire de 9 ans en 77 ans.
+
+On distingue deux grandes phases dans cette évolution :
+
+. Une croissance rapide entre 1950 et 2015, principalement portée par les pays en développement, grâce à la réduction de la mortalité infantile, à la généralisation des campagnes de vaccination, à l’accès élargi aux soins de santé primaires, et à l’amélioration des conditions de vie.
+
+. Un ralentissement à partir de 2025, correspondant à un palier dans la majorité des régions du monde. Les gains deviennent plus difficiles à obtenir, car ils dépendent désormais de la prévention des maladies chroniques, de la prise en charge du vieillissement et des innovations médicales avancées.
+
+On observe également un léger recul autour de 2020, probablement imputable à la pandémie de COVID-19, qui a temporairement fait baisser l’espérance de vie dans de nombreuses régions.
+
+Cette visualisation met en évidence l’amélioration spectaculaire des conditions sanitaires et sociales au niveau mondial au cours des 70 dernières années, tout en rappelant que les défis futurs reposeront moins sur la survie de la petite enfance que sur le maintien d’une bonne santé à un âge avancé.
+
+En résumé, les projections de l’ONU valident pleinement notre hypothèse initiale :
+L’espérance de vie à la naissance a connu une augmentation rapide depuis 1950, et devrait continuer à progresser jusqu’en 2100, bien que plus lentement.
 
 
 
