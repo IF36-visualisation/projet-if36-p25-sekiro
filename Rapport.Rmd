@@ -727,7 +727,17 @@ La **République Démocratique du Congo** se distingue par une **croissance cont
 
 Ce graphique confirme donc non seulement **l’ampleur des croissances prévues**, mais aussi **la diversité des trajectoires**, reflet des différences en termes de **politiques publiques**, de **développement économique**, de **transition sanitaire**, et de **fécondité**.
 
-## 6. Quel est l'âge médian des populations par pays en 2023 ?
+En **conclusion**, cette **double analyse visuelle** met en lumière un **basculement potentiel de la carte démographique mondiale** au profit de l’**Afrique subsaharienne**.  
+Ces projections incitent à réfléchir dès aujourd’hui aux **politiques à adopter** pour **transformer cette croissance en levier de développement durable**.
+
+## 6. Quel est l'âge médian des populations par pays en 1950 et en 2023 ?
+Dans cette partie, nous cherchons à comparer l'âge médian des populations entre 1950 et 2023.
+L’objectif est de visualiser le vieillissement démographique à l’échelle mondiale.
+Nous observons les différences entre les deux années à l’aide de cartes.
+
+Ces visualisations permettent d’identifier les zones où le vieillissement est le plus marqué.
+On s’attend à une hausse de l’âge médian dans la majorité des pays.
+Ce vieillissement devrait être particulièrement visible en Europe, en Amérique du Nord et en Asie de l’Est.
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 # 1. Charger et nettoyer les données d'âge médian
 load_and_clean_median_age <- function() {
@@ -813,15 +823,57 @@ median_age_2023 <- filter_median_age_2023(median_age_data) %>%
 world_map <- load_world_map()
 map_final <- prepare_map_data(world_map, median_age_2023)
 
-# 8. Affichage interactif
-ggplotly(plot_median_age_map(map_final), tooltip = "text")
+# 9. Filtrer les données pour 1950
+filter_median_age_1950 <- function(data) {
+  data %>%
+    filter(grepl("^[A-Za-z]", Country)) %>%
+    filter(Year == "1950", !is.na(MedianAge))
+}
+
+# 10. Carte 1950
+median_age_1950 <- filter_median_age_1950(median_age_data) %>%
+  harmonize_country_names()
+
+map_1950 <- prepare_map_data(world_map, median_age_1950)
+
+# 11. Fonction modifiée pour titre personnalisable
+plot_median_age_map_year <- function(map_data, year) {
+  ggplot(map_data, aes(long, lat, group = group, fill = MedianAge, 
+                       text = paste0(Country_map, "<br>Âge médian : ", MedianAge))) +
+    geom_polygon(color = "gray80", size = 0.2) +
+    scale_fill_viridis_c(option = "plasma", direction = -1, name = "Âge médian") +
+    theme_void() +
+    labs(title = paste("Âge Médian par Pays en", year)) +
+    theme(
+      plot.title = element_text(hjust = 0.5, face = "bold"),
+      legend.title = element_text(size = 10, face = "bold"),
+      legend.text = element_text(size = 8)
+    )
+}
+
+# 12. Affichage interactif des deux cartes
+plot_1950 <- ggplotly(plot_median_age_map_year(map_1950, "1950"), tooltip = "text")
+plot_2023 <- ggplotly(plot_median_age_map_year(map_final, "2023"), tooltip = "text")
+
+# 13. Affichage côte à côte (si HTML / Shiny ou en deux blocs)
+plot_1950
+plot_2023
+
 ```
+En Europe, l’augmentation est nette. Dans de nombreux pays, l’âge médian a progressé de plus de 15 ans. Cela s’explique par la baisse de la natalité et l’allongement de l’espérance de vie.
+Cependant, certains pays comme la Suède montrent une hausse plus modérée. Par exemple, l’âge médian est passé de 33 ans à 39 ans seulement. Cela peut être dû à un équilibre démographique plus stable dès les années 1950.
 
+En Amérique du Nord, les États-Unis et le Canada suivent une tendance similaire à celle de l’Europe.
 
----
+En Asie, des pays comme le Japon et la Corée du Sud affichent une hausse très marquée, en lien avec leur transition démographique rapide.
 
-En **conclusion**, cette **double analyse visuelle** met en lumière un **basculement potentiel de la carte démographique mondiale** au profit de l’**Afrique subsaharienne**.  
-Ces projections incitent à réfléchir dès aujourd’hui aux **politiques à adopter** pour **transformer cette croissance en levier de développement durable**.
+En Afrique, on constate deux dynamiques différentes.
+Dans les pays d’Afrique du Nord, l’âge médian a aussi fortement progressé.
+En revanche, dans les pays du Sahel, l’évolution est bien plus lente, voire inexistante. Au Niger, l’âge médian est resté très bas : 13 ans en 1950, 15 ans en 2023.
+Certains pays comme le Tchad ou la République centrafricaine ont même vu leur âge médian baisser. C’est un signal fort qui pourrait s’expliquer par une croissance rapide de la population jeune, liée à une fécondité très élevée, des conflits, ou des conditions sanitaires difficiles.
+
+Même constat en Afghanistan, où l’âge médian semble avoir diminué sur la période.
+
 
 ## 7. Évolution de l’espérance de vie à la naissance dans le monde (1950–2100)
 
