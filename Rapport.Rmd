@@ -130,6 +130,7 @@ library(tidyverse)
 library(plotly)
 library(RColorBrewer)
 library(readr)  
+library(scales)
 ```
 
 ## 1. Comment le taux de fécondité total (TFR) a-t-il évolué entre 1950 et 2023 dans les cinq continents ?
