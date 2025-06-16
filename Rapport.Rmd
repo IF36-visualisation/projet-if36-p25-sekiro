@@ -132,7 +132,7 @@ library(RColorBrewer)
 library(readr)  
 ```
 
-## 1. Comment le taux de fécondité total (TFR) a-t-il évolué entre 1950 et 2023 dans les cinq continents ?
+### 1. Comment le taux de fécondité total (TFR) a-t-il évolué entre 1950 et 2023 dans les cinq continents ?
 
 Nous supposons que le TFR a globalement diminué sur tous les continents depuis 1950 avec des disparités régionales marquées (ex : déclin plus rapide en Europe qu'en Afrique). Le taux de fécondité total est le nombre d'enfant vivant à la naissance par femme. On ne compte pas ici l'indice de survie des enfants. Nous respecterons la division en continent de l'Amérique en quatre entités (South America, Central America, the Caribbean, and Northern America) faite par l'ONU dans ce dataset.
 
@@ -482,7 +482,7 @@ Ces taux élevés traduisent des défis persistants en matière d’accès aux s
 Cet écart très marqué entre pays en développement et pays développés confirme notre hypothèse de départ : le niveau de développement économique, sanitaire et éducatif est un déterminant majeur du taux de mortalité infantile.  
 Ces résultats soulignent aussi l'importance des politiques publiques de santé dans la réduction des inégalités sanitaires à l'échelle mondiale.
 
-## 4. Quels sont les 10 pays représentant la plus forte part de la population mondiale en 2023 ?
+### 4. Quels sont les 10 pays représentant la plus forte part de la population mondiale en 2023 ?
 
 Nous formulons l’hypothèse que la distribution de la population mondiale en 2023 est fortement concentrée dans quelques grands pays à forte démographie.  
 Des pays comme la Chine, l’Inde, les États-Unis ou l’Indonésie devraient figurer parmi les principaux contributeurs à la population mondiale en raison de leur immense taille démographique historique et de leur dynamique de croissance soutenue.  
@@ -603,7 +603,7 @@ Cette forte concentration est le reflet de tendances historiques : natalité él
 <a id="section-5"></a>
 
 
-## 5. Quels pays connaîtront la plus forte croissance démographique entre 2023 et 2100 ?
+### 5. Quels pays connaîtront la plus forte croissance démographique entre 2023 et 2100 ?
 
 Nous faisons l’hypothèse que les pays à plus forte croissance démographique d’ici 2100 seront majoritairement situés en **Afrique subsaharienne**, du fait d’un **taux de fécondité élevé**, d’une **population jeune**, et d’un **début de transition démographique plus récent**.  
 Ces pays bénéficient en effet d’une **dynamique de croissance naturelle importante**, combinée à une **amélioration progressive des conditions de vie** (santé, éducation, urbanisation).
@@ -613,7 +613,7 @@ Ce scénario prend en compte une hypothèse **modérée de baisse de la fécondi
 
 Le premier graphique ci-dessous présente les **10 pays** qui connaîtront la **plus forte augmentation de population en valeur absolue** entre 2023 et 2100 *(en millions d’habitants)* :
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
 # Chargement des données
 df <- read_csv("data/WPP2024_Demographic_Indicators_Medium.csv", show_col_types = FALSE)
 
@@ -730,7 +730,7 @@ Ce graphique confirme donc non seulement **l’ampleur des croissances prévues*
 En **conclusion**, cette **double analyse visuelle** met en lumière un **basculement potentiel de la carte démographique mondiale** au profit de l’**Afrique subsaharienne**.  
 Ces projections incitent à réfléchir dès aujourd’hui aux **politiques à adopter** pour **transformer cette croissance en levier de développement durable**.
 
-## 6. Quel est l'âge médian des populations par pays en 1950 et en 2023 ?
+### 6. Quel est l'âge médian des populations par pays en 1950 et en 2023 ?
 Dans cette partie, nous cherchons à comparer l'âge médian des populations entre 1950 et 2023.
 L’objectif est de visualiser le vieillissement démographique à l’échelle mondiale.
 Nous observons les différences entre les deux années à l’aide de cartes.
@@ -875,14 +875,14 @@ Certains pays comme le Tchad ou la République centrafricaine ont même vu leur 
 Même constat en Afghanistan, où l’âge médian semble avoir diminué sur la période.
 
 
-## 7. Évolution de l’espérance de vie à la naissance dans le monde (1950–2100)
+### 7. Évolution de l’espérance de vie à la naissance dans le monde (1950–2100)
 
 Nous avons émis l’hypothèse que l’espérance de vie à la naissance augmente de manière continue à l’échelle mondiale depuis 1950. Cette progression serait principalement due aux avancées médicales (vaccins, antibiotiques, chirurgie), à l’amélioration de l’hygiène, à la diminution de la mortalité infantile, à une meilleure nutrition, et plus largement, à la transition épidémiologique.
 Nous supposons également que cette croissance se poursuivra jusqu’en 2100, mais à un rythme ralenti, car les gains deviennent plus difficiles à mesure que l'on approche des limites biologiques humaines.
 
 Pour confronter cette hypothèse à la réalité des données, nous avons sélectionné les projections issues du scénario moyen (Medium) fournies par la base World Population Prospects 2024 de l’ONU, couvrant l’évolution mondiale de l’espérance de vie de 1950 à 2100.
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE,eval=FALSE}
 # Chargement des données
 df <- read_csv("data/WPP2024_Demographic_Indicators_Medium.csv", show_col_types = FALSE)
 
