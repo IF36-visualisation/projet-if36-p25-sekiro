@@ -256,12 +256,10 @@ common_theme <- function() {
 }
 
 # Barres
-
 create_styled_bar_plot <- function(data, title, y_label, fill_color) {
   p <- ggplot(data, aes(x = reorder(Country, Percent_Change), y = Percent_Change, 
-                     text = paste("Pays:", Country, "<br>Changement:", round(Percent_Change, 1), "%"))) +
+                        text = paste("Pays:", Country, "<br>Changement:", round(Percent_Change, 1), "%"))) +
     geom_bar(stat = "identity", fill = fill_color, color = "black", size = 0.2, width = 0.7) +
-    coord_flip() +
     common_theme() +
     labs(title = title, x = "Pays", y = y_label)
   
@@ -279,7 +277,6 @@ create_styled_bar_plot <- function(data, title, y_label, fill_color) {
       )
     )
 }
-
 # Graph en ligne
 create_styled_line_plot <- function(data, title) {
   countries <- unique(data$Country)

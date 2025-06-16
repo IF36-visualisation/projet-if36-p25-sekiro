@@ -24,6 +24,8 @@ shinyServer(function(input, output) {
     
     data_clean <- data_estimates[-(1:12), ] %>% 
       filter(`Type` == "Country/Area") %>%
+      
+      
       rename(
         Country = `Region, subregion, country or area *`,
         Year = Year,
