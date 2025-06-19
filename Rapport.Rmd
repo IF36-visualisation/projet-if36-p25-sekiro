@@ -1069,7 +1069,9 @@ Pour la réalisation de ce projet, nous nous sommes réparties les taches de la 
 * Tous les membres du groupe ont travaillé conjointement sur la rédaction de la proposition Read.Me.
 * En ce qui concerne la partie exploration nous nous sommes répartis les questions de la manière suivante :
 	+ `Robin :` **1.** Comment le taux de fécondité total (TFR) a-t-il évolué entre 1950 et 2023 dans les cinq continents ? 
-  + `Othmane :` **2.** Quels sont les 10 pays ayant connu les plus fortes croissances et décroissances démographiques entre 1950 et 2023 ? 
+  + `Othmane :` **2.** Quels sont les 10 pays ayant connu les plus fortes croissances et décroissances démographiques entre 1950 et 2023 ?
+   **6.** Quel est l'âge médian des populations par pays en 1950 et en 2023 ?
+   **Shiny**
   + `Nicolas :` **3.** Quels sont les 10 pays avec les taux de mortalité infantile les plus faibles et les plus élevés en moyenne entre 2000 et 2023 ?
   + `Zakaria :` **4.** Quels sont les 10 pays représentant la plus forte part de la population mondiale en 2023 ? 
   
