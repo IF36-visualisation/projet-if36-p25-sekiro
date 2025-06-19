@@ -5,8 +5,7 @@
 #
 # Find out more about building applications with Shiny here:
 #    https://shiny.posit.co/
-# server.R
-# This is the server logic of a Shiny web application.
+
 library(shiny)
 library(shinydashboard)
 library(readxl)

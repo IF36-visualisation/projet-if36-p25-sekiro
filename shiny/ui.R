@@ -5,7 +5,6 @@
 #
 # Find out more about building applications with Shiny here:
 #    https://shiny.posit.co/
-# ui.R
 library(shiny)
 library(shinydashboard)
 library(plotly)
@@ -25,7 +24,6 @@ dashboardPage(
   
   dashboardBody(
     tabItems(
-      # Page 1 : Infos principales
       tabItem(tabName = "stats",
               fluidRow(
                 valueBoxOutput("top_country"),
@@ -34,14 +32,12 @@ dashboardPage(
               )
       ),
       
-      # Page 2 : Bar chart migration
       tabItem(tabName = "graph",
               fluidRow(
                 box(width = 12, plotOutput("migrationPlot", height = "600px"))
               )
       ),
       
-      # Page 3 : Bubble chart corrélation
       tabItem(tabName = "bubble",
               fluidRow(
                 box(
