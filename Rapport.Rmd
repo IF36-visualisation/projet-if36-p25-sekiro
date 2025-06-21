@@ -1060,6 +1060,203 @@ plot_corr <- ggplotly(plot_fertility_vs_mortality(fert_mort_2023), tooltip = "te
 plot_corr
 
 ```
+ ### 9. Quels sont les 10 pays avec les soldes migratoires nets les plus élevés et les plus faibles entre 2000 et 2023 ?
+Nous formulons l'hypothèse que les migrations internationales suivent des patterns économiques et géopolitiques clairs.  
+Les pays développés à forte croissance économique (États-Unis, Allemagne, pays du Golfe) devraient présenter des soldes migratoires positifs élevés, attirant une main-d'œuvre qualifiée et des populations en quête de meilleures opportunités.  
+À l'inverse, les pays en développement ou en situation de crise (conflits, instabilité économique) devraient afficher des soldes négatifs importants, traduisant une émigration nette de leur population.  
+Nous nous attendons également à observer l'impact des politiques migratoires et des événements géopolitiques sur ces flux.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# Chargement des bibliothèques
+library(readxl)
+library(dplyr)
+library(ggplot2)
+library(forcats)
+
+# 1. Importation des données
+data <- readxl::read_excel("data/Dem_1950-2023.xlsx", skip = 16)
+
+# 2. Sélection des colonnes utiles
+data <- data %>%
+  select(
+    country = `Region, subregion, country or area *`,
+    year = Year,
+    net_migration = `Net Number of Migrants (thousands)`
+  ) %>%
+  mutate(
+    year = as.numeric(year),
+    net_migration = as.numeric(gsub(",", "", net_migration))
+  )
+
+# 3. Suppression des agrégats régionaux
+agrégats <- c(
+  "World", "More developed regions", "Less developed regions",
+  "Least developed countries", "Less developed regions, excluding least developed countries",
+  "High-income countries", "Middle-income countries", "Upper-middle-income countries",
+  "Lower-middle-income countries", "Low-income countries", "Low-and-middle-income countries",
+  "Less developed regions, excluding China", "High-and-upper-middle-income countries",
+  "Low-and-Lower-middle-income countries", "Europe, Northern America, Australia, and New Zealand",
+  "Land-locked Developing Countries (LLDC)", "LLDC: Africa", "LLDC: Asia",
+  "Sub-Saharan Africa", "Northern Africa and Western Asia", "Central and Southern Asia",
+  "Eastern and South-Eastern Asia", "Latin America and the Caribbean", "Oceania",
+  "Europe and Northern America", "Asia", "Africa", "Europe", "Northern America",
+  "Caribbean", "Central America", "South America", "Eastern Europe", "Northern Europe",
+  "Southern Europe", "Western Europe", "Eastern Africa", "Middle Africa",
+  "Northern Africa", "Southern Africa", "Western Africa", "Western Asia",
+  "Eastern Asia", "South-Eastern Asia", "Southern Asia", "Melanesia",
+  "Micronesia", "Polynesia", "No income group available"
+)
+
+data <- data %>% filter(!country %in% agrégats)
+
+# 4. Agrégation du solde migratoire net par pays (2000-2023)
+migration_summary <- data %>%
+  filter(year >= 2000 & year <= 2023) %>%
+  group_by(country) %>%
+  summarise(SoldeMigratoireTotal = sum(net_migration, na.rm = TRUE)) %>%
+  arrange(desc(SoldeMigratoireTotal))
+
+# 5. Sélection des 10 plus et 10 moins
+top_10_plus <- head(migration_summary, 10)
+top_10_moins <- tail(migration_summary, 10)
+
+# 6. Préparation des données pour le graphique
+combined_data <- bind_rows(
+  top_10_plus %>% mutate(Category = "Immigration nette"),
+  top_10_moins %>% mutate(Category = "Émigration nette")
+) %>%
+  mutate(
+    country = forcats::fct_reorder(country, SoldeMigratoireTotal),
+    SoldeMigratoireMillions = SoldeMigratoireTotal / 1000,
+    ColorGroup = ifelse(SoldeMigratoireTotal > 0, "Positif", "Négatif")
+  )
+
+# 7. Visualisation miroir : immigration à droite, émigration à gauche
+combined_data_mirror <- combined_data %>%
+  mutate(
+    ValeurAffichee = ifelse(ColorGroup == "Négatif", -SoldeMigratoireMillions, SoldeMigratoireMillions),
+    country = fct_reorder(country, ValeurAffichee)
+  )
+
+ggplot(combined_data_mirror, aes(x = ValeurAffichee, y = country, fill = ColorGroup)) +
+  geom_col(width = 0.6, alpha = 0.95) +
+  geom_text(
+    aes(label = paste0(round(abs(ValeurAffichee), 1), "M")),
+    hjust = ifelse(combined_data_mirror$ValeurAffichee > 0, -0.1, 1.1),
+    size = 3,
+    fontface = "bold",
+    color = "#2C3E50"
+  ) +
+  scale_fill_manual(
+    values = c("Positif" = "#2A9D8F", "Négatif" = "#E63946"),
+    name = "Type de migration"
+  ) +
+  labs(
+    title = "Solde migratoire net cumulé par pays (2000–2023)",
+    subtitle = "Immigration nette à droite | Émigration nette à gauche",
+    x = "Solde migratoire net (millions)",
+    y = "",
+    caption = "Source : World Population Prospects 2024"
+  ) +
+  theme_minimal(base_size = 10) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
+    plot.subtitle = element_text(hjust = 0.5, color = "#7F8C8D"),
+    axis.text.y = element_text(face = "bold"),
+    axis.text.x = element_text(size = 9),
+    legend.position = "top"
+  ) +
+  scale_x_continuous(labels = abs, expand = expansion(mult = c(0.1, 0.1)))
+
+
+
+```
+Le graphique révèle des patterns migratoires cohérents avec nos hypothèses de départ.  
+
+**Pays à forte immigration nette :** Les États-Unis dominent largement avec un solde positif dépassant les autres pays, confirmant leur statut de principale destination migratoire mondiale. L'Allemagne, le Royaume-Uni et les pays du Golfe (Émirats Arabes Unis, Arabie Saoudite) figurent également parmi les destinations privilégiées, reflétant leur attractivité économique et leurs besoins en main-d'œuvre.
+
+**Pays à forte émigration nette :** Les résultats mettent en évidence des pays confrontés à des défis économiques, politiques ou démographiques majeurs. La présence de pays comme la Syrie ou l'Afghanistan illustre l'impact des conflits armés sur les flux migratoires, tandis que d'autres pays reflètent des dynamiques économiques poussant leur population à émigrer.
+
+Cette analyse souligne le rôle central des inégalités de développement, des politiques migratoires et des événements géopolitiques dans la structuration des flux migratoires internationaux sur les deux dernières décennies.
+###10. Existe-t-il une corrélation entre le taux de mortalité infantile et le taux de fécondité total (TFR) en 2023 ?
+
+Nous formulons l'hypothèse qu'il existe une corrélation positive forte entre le taux de mortalité infantile et le taux de fécondité total.
+Cette hypothèse s'appuie sur la théorie de la transition démographique : dans les sociétés où la mortalité infantile est élevée, les familles tendent à avoir plus d'enfants pour compenser les risques de décès prématurés et assurer leur descendance.
+À l'inverse, dans les pays développés où la mortalité infantile est faible, les familles peuvent se permettre d'avoir moins d'enfants tout en étant assurées de leur survie.
+Cette relation pourrait également refléter des facteurs socio-économiques communs : accès limité aux soins de santé, éducation, planning familial, et conditions de vie précaires.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# Chargement des bibliothèques nécessaires
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(plotly)
+
+# Chargement des données
+df <- read_csv("data/WPP2024_Demographic_Indicators_Medium.csv", show_col_types = FALSE)
+
+# Filtrage pour l'année 2023 et la variante Medium
+df_2023 <- df %>%
+  filter(Variant == "Medium", Time == 2023) %>%
+  select(Location, IMR, TFR) %>%
+  filter(!is.na(IMR), !is.na(TFR)) %>%
+  # Suppression des agrégats régionaux
+  filter(!Location %in% c(
+    "World", "More developed regions", "Less developed regions",
+    "Least developed countries", "Sub-Saharan Africa", "Northern Africa and Western Asia",
+    "Central and Southern Asia", "Eastern and South-Eastern Asia", "Europe and Northern America",
+    "Latin America and the Caribbean", "Oceania", "Asia", "Africa", "Europe",
+    "Northern America", "Caribbean", "Central America", "South America"
+  ))
+
+# Calcul du coefficient de corrélation
+correlation_coefficient <- cor(df_2023$IMR, df_2023$TFR, use = "complete.obs")
+
+# Création du graphique de corrélation
+p <- ggplot(df_2023, aes(x = IMR, y = TFR)) +
+  geom_point(alpha = 0.7, size = 2, color = "#2A9D8F") +
+  geom_smooth(method = "lm", se = TRUE, color = "#E63946", fill = "#E63946", alpha = 0.2) +
+  labs(
+    title = paste("Corrélation entre Mortalité Infantile et Taux de Fécondité (2023)"),
+    subtitle = paste("Coefficient de corrélation r =", round(correlation_coefficient, 3)),
+    x = "Taux de mortalité infantile (pour 1000 naissances vivantes)",
+    y = "Taux de fécondité total (TFR)",
+    caption = "Source : World Population Prospects 2024 | Chaque point représente un pays"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, size = 12, color = "#7F8C8D"),
+    axis.title = element_text(size = 11),
+    axis.text = element_text(size = 10),
+    plot.caption = element_text(size = 9, color = "#7F8C8D")
+  )
+
+# Affichage du graphique
+print(p)
+
+# Identification des pays extrêmes
+pays_tfr_eleve <- df_2023 %>% arrange(desc(TFR)) %>% head(5)
+pays_imr_eleve <- df_2023 %>% arrange(desc(IMR)) %>% head(5)
+pays_tfr_faible <- df_2023 %>% arrange(TFR) %>% head(5)
+pays_imr_faible <- df_2023 %>% arrange(IMR) %>% head(5)
+
+cat("Pays avec TFR le plus élevé:\n")
+print(pays_tfr_eleve[c("Location", "TFR", "IMR")])
+
+cat("\nPays avec IMR le plus élevé:\n")
+print(pays_imr_eleve[c("Location", "IMR", "TFR")])
+
+# Statistiques descriptives
+cat(paste("\nCoefficient de corrélation de Pearson:", round(correlation_coefficient, 4)))
+cat(paste("\nNombre de pays analysés:", nrow(df_2023)))
+```
+Le graphique met en évidence une forte corrélation positive entre le taux de mortalité infantile et le taux de fécondité total en 2023, avec un coefficient de corrélation de **r = 0,867**. Cela signifie que, de manière générale, plus la mortalité infantile est élevée dans un pays, plus les femmes ont tendance à avoir un nombre élevé d’enfants. Cette relation s'explique notamment par des facteurs socio-économiques : dans les pays où la mortalité infantile reste importante, les familles ont souvent davantage d’enfants pour compenser les pertes potentielles, en l’absence de systèmes de santé ou de protection sociale efficaces. À l’inverse, dans les pays développés où la mortalité infantile est très faible, le taux de fécondité tend également à diminuer en raison de la sécurité sanitaire, de l'accès à l'éducation, et d'autres facteurs liés à la transition démographique. Le graphique reflète donc un schéma global bien connu dans les dynamiques de développement.
+
+
+
+
+
 To do 
 
 ## IV. Annexe
@@ -1073,5 +1270,7 @@ Pour la réalisation de ce projet, nous nous sommes réparties les taches de la 
    **6.** Quel est l'âge médian des populations par pays en 1950 et en 2023 ?
    **Shiny**
   + `Nicolas :` **3.** Quels sont les 10 pays avec les taux de mortalité infantile les plus faibles et les plus élevés en moyenne entre 2000 et 2023 ?
-  + `Zakaria :` **4.** Quels sont les 10 pays représentant la plus forte part de la population mondiale en 2023 ? 
+  + `Zakaria :` **4.** Quels sont les 10 pays représentant la plus forte part de la population mondiale en 2023 ? ,**9.**  Quels sont les 10 pays avec les soldes migratoires nets les plus élevés et les plus faibles                       entre 2000 et 2023 ?  **10.**  Existe-t-il une corrélation entre le taux de mortalité infantile et le taux de fécondité total (TFR) en 2023 ?
+               
+
   
