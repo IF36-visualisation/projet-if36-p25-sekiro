@@ -179,16 +179,28 @@ ggplot(data_clean, aes(x = year, y = tfr, color = continent)) +
 
 La baisse globale du TFR, passant de 4,7 en 1950 à 2,3 en 2023, dissimule des réalités hétérogènes en fonction du continent.
 
+&emsp; La transition démographique explique le basculement historique des sociétés : d'un régime démographique ancestral (forte natalité compensant une mortalité infantile élevée) vers un modèle moderne (faible mortalité et natalité maîtrisée). Ce processus en quatre phases :
+1. Équilibre précaire (TFR>6)
+2. Chute de la mortalité (explosion démographique)
+3. Baisse différée de la natalité (TFR vers 2,1)
+4. Nouvel équilibre à bas niveau (vieillissement) – éclaire les écarts continentaux observés
+&emsp; Bien sûr ,les politiques coercitives (politique nataliste) ou les chocs historiques (famines) accélèrent artificiellement les phases. Certaines régions (Afrique subsaharienne) connaissent un blocage en phase 2 par manque d'éducation féminine. Les sociétés post-industrielles (Corée du Sud, Italie) entrent dans une phase 5 non théorisée et inédite, une dépopulation structurelle et continue même en présence de politique.
+
+
 &emsp; En Afrique, le TFR a connu un déclin relatif mais inachevé, diminuant de 6,7 à 4,3 sur 73 ans. Cette transition lente peut s'expliquer par la persistance de normes pro-natalistes, par un accès limité à la contraception, la baisse faible de la mortalité infantile, divisée par quatre depuis 1950 qui n’a pas encore entraîné un ajustement proportionnel des comportements reproductifs (la seconde phase de la transition démographique).
+&emsp; Le continent est bloqué en phase 2 (mortalité infantile en baisse sans adaptation de la natalité). L’absence de chute brutale du TFR retarde l’entrée en phase 3, risquant un "dividende démographique manqué" si la croissance économique ne suit pas la jeunesse de la population – illustrant le blocage critique du modèle en Afrique subsaharienne.
 
 &emsp; En Europe, le TFR a continuellement baissé dès les années 1970 pour atteindre 1,5 en 2023. L'Europe est sous le seuil de renouvellement depuis 1975, sans immigration la population aurait largement diminué.
+&emsp; Le continent a achevé sa phase 4 (équilibre basse natalité/basse mortalité). Son enjeu est désormais la "détransition démographique" : incapacité structurelle à remonter le TFR au seuil de renouvellement, accélérant le vieillissement et la dépendance à l’immigration. Le maintient de la population est le chalenge signature de la phase 5 des sociétés post-industrielles oocidentale.
 
 &emsp;  On peut voir des données intéressantes des années 1950 à 1975. Si l'Amérique du Sud a une baisse continue et linéaire, l'Asie connaît des rebonds et de fortes baisses. En effet, l'année 1961, celle de la plus grande baisse, peut être corrélée avec la Grande famine chinoise (1959-1961). Mais sous cette moyenne se cache de grande disparité : dans six pays (Chine, Corée du Nord, Corée du Sud, Japon, Singapour, Thaïlande), la transition de la fécondité est largement achevée avec un nombre moyen d’enfants par femme qui est désormais inférieur au seuil de remplacement des génération. Le Japon, Singapour et la Corée du Sud se caractérisent même par des niveaux de fécondité parmi les plus bas au monde, inférieurs à 1,4 enfant par femme (faisant d’eux des ‘lowest-low’ fertility countries). La Chine, grâce à sa politique coercitive de l’enfant unique, a évité 400 millions de naissances, mais au prix d’un déséquilibre de genre historique. L’Inde, via des campagnes volontaristes comme "Us two, our two" (un couple, deux enfants), a réduit son TFR de 5,7 à 2,0.
+&emsp; La région vit une phase 3 accélérée et traumatique (politiques coercitives) avec entrée prématurée en phase 4 (Japon, Corée du Sud). Les chocs historiques (famines) ont perturbé la baisse naturelle de la fécondité, créant des déséquilibres durables. La Corée du Sud (TFR 0,72) incarne désormais la phase 5 la plus avancée.
 
 &emsp; L’Océanie, avec un TFR moyen de 2,1, cache des fractures invisibles. L’Australie et la Nouvelle-Zélande (1,6) contrastent avec la Mélanésie, où la Papouasie-Nouvelle-Guinée maintient un TFR de 3,2. 
+&emsp; Dualité de phase : Australie/NZ en phase 4 (vieillissement avancé), Mélanésie en fin de phase 2 (mortalité infantile en baisse mais natalité résiliente).
 
 &emsp; Du côté des Amériques, deux schémas sont présents. L'Amérique du Nord (Northen America ou Amérique septentrionale) composé des États-Unis, du Canada ainsi que des Bermudes (Royaume-Uni), du  Groenland (Danemark) et de Saint-Pierre-et-Miquelon (France), suit une courbe très proche de celle de l'Europe. Le reste des Amériques; centrale, du sud et les Caraïbes ; suivent une trajectoire similaire à l'Asie avec une baisse qui les emmène tous en dessous du seuil de renouvellement.
-
+&emsp; Amérique du Nord : Transition achevée en phase 4 (profil européen), compensée par l’immigration. Amérique latine/Caraïbes : Phase 3 la plus rapide de l’histoire (urbanisation + planning familial), mais risque de "vieillissement sans prospérité" – défi typique des phases accélérées sans consolidation économique dans le temps.
 
 ### 2. Quels sont les 10 pays ayant connu les plus fortes croissances et décroissances démographiques entre 1950 et 2023 ?
 
