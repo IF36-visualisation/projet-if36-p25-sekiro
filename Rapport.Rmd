@@ -132,6 +132,7 @@ library(RColorBrewer)
 library(readr)
 library(scales)
 library(countrycode)
+library(ggimage)
 ```
 
 ### 1. Comment le taux de fécondité total (TFR) a-t-il évolué entre 1950 et 2023 dans les cinq continents ?
@@ -603,7 +604,7 @@ On observe que l’Inde et la Chine dominent largement, représentant à eux seu
 
 Cette forte concentration est le reflet de tendances historiques : natalité élevée dans certaines régions, urbanisation massive, dynamiques économiques diverses, et transitions démographiques différenciées selon les pays.
 
-<a id="section-5"></a>
+
 
 
 ### 5. Quels pays connaîtront la plus forte croissance démographique entre 2023 et 2100 ?
@@ -899,7 +900,7 @@ Nous supposons également que cette croissance se poursuivra jusqu’en 2100, ma
 
 Pour confronter cette hypothèse à la réalité des données, nous avons sélectionné les projections issues du scénario moyen (Medium) fournies par la base World Population Prospects 2024 de l’ONU, couvrant l’évolution mondiale de l’espérance de vie de 1950 à 2100.
 
-```{r echo=FALSE, message=FALSE, warning=FALSE,eval=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 # Chargement des données
 df <- read_csv("data/WPP2024_Demographic_Indicators_Medium.csv", show_col_types = FALSE)
 
@@ -965,106 +966,8 @@ Cette visualisation met en évidence l’amélioration spectaculaire des conditi
 En résumé, les projections de l’ONU valident pleinement notre hypothèse initiale :
 L’espérance de vie à la naissance a connu une augmentation rapide depuis 1950, et devrait continuer à progresser jusqu’en 2100, bien que plus lentement.
 
-### 8.Existe-t-il un lien entre la fécondité et la mortalité infantile à travers les pays en 2023 ?
-à faire
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-# 1. Charger et nettoyer les données nécessaires
-load_and_clean_fertility_mortality <- function() {
-  file_path <- "data/Dem_1950-2023.xlsx"
-  raw_data <- read_excel(file_path, sheet = "Estimates")
-  colnames(raw_data) <- as.character(raw_data[12, ])
-  data <- raw_data[-(1:12), ]
-  
-  # Nettoyage et filtrage
-  data_clean <- data %>%
-    rename(
-      Country = `Region, subregion, country or area *`,
-      Year = Year,
-      TFR = `Total Fertility Rate (live births per woman)`,
-      IMR = `Infant Mortality Rate (infant deaths per 1,000 live births)`,
-      Type = Type
-    ) %>%
-    filter(Type == "Country/Area") %>%
-    mutate(
-      Year = as.character(Year),
-      TFR = as.numeric(TFR),
-      IMR = as.numeric(IMR)
-    )
-  
-  return(data_clean)
-}
 
-# 2. Filtrer pour l'année 2023 et pays uniquement
-filter_fertility_mortality_2023 <- function(data) {
-  data %>%
-    filter(grepl("^[A-Za-z]", Country)) %>%
-    filter(Year == "2023", !is.na(TFR), !is.na(IMR))
-}
-
-# 3. Harmoniser + Ajouter le continent
-harmonize_and_add_continent <- function(df) {
-  df %>%
-    mutate(
-      Country = case_when(
-        Country == "United States of America" ~ "USA",
-        Country == "United Kingdom" ~ "UK",
-        Country == "Democratic Republic of the Congo" ~ "Democratic Republic of Congo",
-        Country == "Côte d’Ivoire" ~ "Ivory Coast",
-        Country == "Viet Nam" ~ "Vietnam",
-        Country == "Russian Federation" ~ "Russia",
-        Country == "Syrian Arab Republic" ~ "Syria",
-        Country == "Republic of Korea" ~ "South Korea",
-        Country == "Republic of Moldova" ~ "Moldova",
-        Country == "Iran (Islamic Republic of)" ~ "Iran",
-        Country == "Lao People's Democratic Republic" ~ "Laos",
-        Country == "Venezuela (Bolivarian Republic of)" ~ "Venezuela",
-        TRUE ~ Country
-      ),
-      Continent = countrycode(sourcevar = Country,
-                              origin = "country.name",
-                              destination = "continent")
-    )
-}
-
-# 4. Créer le scatter plot interactif
-plot_fertility_vs_mortality <- function(df) {
-  ggplot(df, aes(x = TFR, y = IMR, color = Continent,
-                 text = paste0(Country, 
-                               "<br>Continent: ", Continent,
-                               "<br>TFR: ", round(TFR, 2),
-                               "<br>IMR: ", round(IMR, 1)))) +
-    geom_point(size = 3, alpha = 0.8) +
-    geom_smooth(method = "lm", se = FALSE, color = "black", linetype = "dashed") +
-    labs(
-      title = "Corrélation entre Fécondité et Mortalité Infantile (2023)",
-      subtitle = "Chaque point représente un pays. Ligne noire = tendance globale.",
-      x = "Taux de Fécondité Total (enfants par femme)",
-      y = "Taux de Mortalité Infantile (pour 1 000 naissances vivantes)",
-      color = "Continent",
-      caption = "Source : World Population Prospects 2024 – ONU"
-    ) +
-    theme_minimal() +
-    theme(
-      plot.title = element_text(face = "bold", hjust = 0.5, size = 14),
-      plot.subtitle = element_text(face = "italic", hjust = 0.5, size = 11),
-      axis.title = element_text(size = 10),
-      axis.text = element_text(size = 9),
-      legend.title = element_text(size = 10),
-      legend.text = element_text(size = 9)
-    )
-}
-
-# 5. Exécution complète
-fert_mort_data <- load_and_clean_fertility_mortality()
-fert_mort_2023 <- filter_fertility_mortality_2023(fert_mort_data) %>%
-  harmonize_and_add_continent()
-
-# 6. Visualisation interactive
-plot_corr <- ggplotly(plot_fertility_vs_mortality(fert_mort_2023), tooltip = "text")
-plot_corr
-
-```
- ### 9. Quels sont les 10 pays avec les soldes migratoires nets les plus élevés et les plus faibles entre 2000 et 2023 ?
+### 8. Quels sont les 10 pays avec les soldes migratoires nets les plus élevés et les plus faibles entre 2000 et 2023 ?
 Nous formulons l'hypothèse que les migrations internationales suivent des patterns économiques et géopolitiques clairs.  
 Les pays développés à forte croissance économique (États-Unis, Allemagne, pays du Golfe) devraient présenter des soldes migratoires positifs élevés, attirant une main-d'œuvre qualifiée et des populations en quête de meilleures opportunités.  
 À l'inverse, les pays en développement ou en situation de crise (conflits, instabilité économique) devraient afficher des soldes négatifs importants, traduisant une émigration nette de leur population.  
@@ -1157,7 +1060,6 @@ ggplot(combined_data_mirror, aes(x = ValeurAffichee, y = country, fill = ColorGr
   ) +
   labs(
     title = "Solde migratoire net cumulé par pays (2000–2023)",
-    subtitle = "Immigration nette à droite | Émigration nette à gauche",
     x = "Solde migratoire net (millions)",
     y = "",
     caption = "Source : World Population Prospects 2024"
@@ -1182,7 +1084,8 @@ Le graphique révèle des patterns migratoires cohérents avec nos hypothèses d
 **Pays à forte émigration nette :** Les résultats mettent en évidence des pays confrontés à des défis économiques, politiques ou démographiques majeurs. La présence de pays comme la Syrie ou l'Afghanistan illustre l'impact des conflits armés sur les flux migratoires, tandis que d'autres pays reflètent des dynamiques économiques poussant leur population à émigrer.
 
 Cette analyse souligne le rôle central des inégalités de développement, des politiques migratoires et des événements géopolitiques dans la structuration des flux migratoires internationaux sur les deux dernières décennies.
-###10. Existe-t-il une corrélation entre le taux de mortalité infantile et le taux de fécondité total (TFR) en 2023 ?
+
+### 9. Existe-t-il une corrélation entre le taux de mortalité infantile et le taux de fécondité total (TFR) en 2023 ?
 
 Nous formulons l'hypothèse qu'il existe une corrélation positive forte entre le taux de mortalité infantile et le taux de fécondité total.
 Cette hypothèse s'appuie sur la théorie de la transition démographique : dans les sociétés où la mortalité infantile est élevée, les familles tendent à avoir plus d'enfants pour compenser les risques de décès prématurés et assurer leur descendance.
@@ -1257,11 +1160,7 @@ cat(paste("\nNombre de pays analysés:", nrow(df_2023)))
 ```
 Le graphique met en évidence une forte corrélation positive entre le taux de mortalité infantile et le taux de fécondité total en 2023, avec un coefficient de corrélation de **r = 0,867**. Cela signifie que, de manière générale, plus la mortalité infantile est élevée dans un pays, plus les femmes ont tendance à avoir un nombre élevé d’enfants. Cette relation s'explique notamment par des facteurs socio-économiques : dans les pays où la mortalité infantile reste importante, les familles ont souvent davantage d’enfants pour compenser les pertes potentielles, en l’absence de systèmes de santé ou de protection sociale efficaces. À l’inverse, dans les pays développés où la mortalité infantile est très faible, le taux de fécondité tend également à diminuer en raison de la sécurité sanitaire, de l'accès à l'éducation, et d'autres facteurs liés à la transition démographique. Le graphique reflète donc un schéma global bien connu dans les dynamiques de développement.
 
-
-
-
-
-To do 
+<a id="section-5"></a>
 
 ## IV. Annexe
 
@@ -1269,12 +1168,16 @@ Pour la réalisation de ce projet, nous nous sommes réparties les taches de la 
 
 * Tous les membres du groupe ont travaillé conjointement sur la rédaction de la proposition Read.Me.
 * En ce qui concerne la partie exploration nous nous sommes répartis les questions de la manière suivante :
-	+ `Robin :` **1.** Comment le taux de fécondité total (TFR) a-t-il évolué entre 1950 et 2023 dans les cinq continents ? 
-  + `Othmane :` **2.** Quels sont les 10 pays ayant connu les plus fortes croissances et décroissances démographiques entre 1950 et 2023 ?
-   **6.** Quel est l'âge médian des populations par pays en 1950 et en 2023 ?
-   **Shiny**
+	
+	+ `Robin :` **1.** Comment le taux de fécondité total (TFR) a-t-il évolué entre 1950 et 2023 dans les cinq continents ?  
+  
+  + `Othmane :` **2.** Quels sont les 10 pays ayant connu les plus fortes croissances et décroissances démographiques entre 1950 et 2023 ?  
+  **6.** Quel est l'âge médian des populations par pays en 1950 et en 2023 ?  
+  **ShinyApp**    
   + `Nicolas :` **3.** Quels sont les 10 pays avec les taux de mortalité infantile les plus faibles et les plus élevés en moyenne entre 2000 et 2023 ?
-  + `Zakaria :` **4.** Quels sont les 10 pays représentant la plus forte part de la population mondiale en 2023 ? ,**9.**  Quels sont les 10 pays avec les soldes migratoires nets les plus élevés et les plus faibles                       entre 2000 et 2023 ?  **10.**  Existe-t-il une corrélation entre le taux de mortalité infantile et le taux de fécondité total (TFR) en 2023 ?
+  + `Zakaria :` **4.** Quels sont les 10 pays représentant la plus forte part de la population mondiale en 2023 ?  
+  **8.**  Quels sont les 10 pays avec les soldes migratoires nets les plus élevés et les plus faibles entre 2000 et 2023 ?    
+  **9.**  Existe-t-il une corrélation entre le taux de mortalité infantile et le taux de fécondité total (TFR) en 2023 ?
                
 
   
