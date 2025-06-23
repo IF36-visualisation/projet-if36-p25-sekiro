@@ -1200,6 +1200,7 @@ cat(paste("\nNombre de pays analysés:", nrow(df_2023)))
 ```
 Le graphique met en évidence une forte corrélation positive entre le taux de mortalité infantile et le taux de fécondité total en 2023, avec un coefficient de corrélation de **r = 0,867**. Cela signifie que, de manière générale, plus la mortalité infantile est élevée dans un pays, plus les femmes ont tendance à avoir un nombre élevé d’enfants. Cette relation s'explique notamment par des facteurs socio-économiques : dans les pays où la mortalité infantile reste importante, les familles ont souvent davantage d’enfants pour compenser les pertes potentielles, en l’absence de systèmes de santé ou de protection sociale efficaces. À l’inverse, dans les pays développés où la mortalité infantile est très faible, le taux de fécondité tend également à diminuer en raison de la sécurité sanitaire, de l'accès à l'éducation, et d'autres facteurs liés à la transition démographique. Le graphique reflète donc un schéma global bien connu dans les dynamiques de développement.
 
+
 <a id="section-5"></a>
 
 ## IV. Conclusion
@@ -1224,11 +1225,12 @@ Ce travail confirme que la démographie n'est pas une fatalité ni une théorie 
 
 #### Témoignages de l'équipe
 
-**Robin** : Ce projet m'a permis de comprendre et faire des dashboards interactifs avec Tableau pour visualiser des dynamiques démographiques complexes. Il aurait pu être intéressant d'avoir des découpages géographiques plus intéressants/ plus fins de la part de l'ONU dans la nomenclature des unités territoriales statistiques (NUTS).
+**Robin** : Ce projet m'a permis de comprendre et faire des dashboards interactifs avec Tableau pour visualiser des dynamiques démographiques complexes. Il aurait pu être intéressant d'avoir des découpages géographiques plus intéressants/ plus fins de la part de l'ONU dans la nomenclature des unités territoriales statistiques (NUTS).  
 
-**Othmane** :
+**Othmane** :Le jeu de données m’a permis de mieux comprendre des notions dont on entend souvent parler comme la fécondité, l’immigration ou le vieillissement démographique mais que je n’avais jamais vraiment explorées en profondeur.
+Sur le plan technique, travailler avec R m’a permis d’approfondir mes compétences, notamment dans la manipulation de données, la visualisation et le développement d’applications interactives avec Shiny. Grâce au cours, je ne me contente plus de représenter les données en graphiques : j’essaie désormais d’en extraire des lectures plus fines, d’interroger les corrélations et de formuler des hypothèses solides.  
 
-**Nicolas** : Ce projet m’a permis de consolider mes compétences en R et j’ai également acquis une meilleure compréhension des enjeux démographiques mondiaux, en apprenant à croiser différents indicateurs pour en extraire des tendances pertinentes. 
+**Nicolas** : Ce projet m’a permis de consolider mes compétences en R et j’ai également acquis une meilleure compréhension des enjeux démographiques mondiaux, en apprenant à croiser différents indicateurs pour en extraire des tendances pertinentes.  
 
 **Zakaria** :
 
@@ -1241,16 +1243,17 @@ Pour la réalisation de ce projet, nous nous sommes réparties les taches de la 
 * Tous les membres du groupe ont travaillé conjointement sur la rédaction de la proposition Read.Me.
 * En ce qui concerne la partie exploration nous nous sommes répartis les questions de la manière suivante :
 	
-	+ `Robin :` **1.** Comment le taux de fécondité total (TFR) a-t-il évolué entre 1950 et 2023 dans les cinq continents ?  
-  
+	+ `Robin :` **1.** Comment le taux de fécondité total (TFR) a-t-il évolué entre 1950 et 2023 dans les cinq continents ?    
+  **3. Tableau** Focus sur les pays baltes et le Liberia
   + `Othmane :` **2.** Quels sont les 10 pays ayant connu les plus fortes croissances et décroissances démographiques entre 1950 et 2023 ?  
- **Tableau** Focus sur les pays baltes et le Liberia `Robin`
-  **6.** Quel est l'âge médian des populations par pays en 1950 et en 2023 ?  
+  **7.** Quel est l'âge médian des populations par pays en 1950 et en 2023 ?  
   **ShinyApp**    
-  + `Nicolas :` **3.** Quels sont les 10 pays avec les taux de mortalité infantile les plus faibles et les plus élevés en moyenne entre 2000 et 2023 ?
-  + `Zakaria :` **4.** Quels sont les 10 pays représentant la plus forte part de la population mondiale en 2023 ?  
-  **8.**  Quels sont les 10 pays avec les soldes migratoires nets les plus élevés et les plus faibles entre 2000 et 2023 ?    
-  **9.**  Existe-t-il une corrélation entre le taux de mortalité infantile et le taux de fécondité total (TFR) en 2023 ?
+  + `Nicolas :` **4.** Quels sont les 10 pays avec les taux de mortalité infantile les plus faibles et les plus élevés en moyenne entre 2000 et 2023 ?   
+  **6.**Quels pays connaîtront la plus forte croissance démographique entre 2023 et 2100 ?  
+  **8.**Évolution de l’espérance de vie à la naissance dans le monde (1950–2100)   
+  + `Zakaria :` **5.** Quels sont les 10 pays représentant la plus forte part de la population mondiale en 2023 ?  
+  **9.**  Quels sont les 10 pays avec les soldes migratoires nets les plus élevés et les plus faibles entre 2000 et 2023 ?    
+  **10.**  Existe-t-il une corrélation entre le taux de mortalité infantile et le taux de fécondité total (TFR) en 2023 ?
                
 
   
