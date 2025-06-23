@@ -1222,6 +1222,16 @@ L'hétérogénéité des sources historiques, particulièrement pour les pays en
 
 Ce travail confirme que la démographie n'est pas une fatalité ni une théorie sans faille et applicable pout tous mais le produit de choix politiques, économiques et sociaux des différents pays et régions.
 
+#### Témoignages de l'équipe
+
+**Robin** : Ce projet m'a permis de comprendre et faire des dashboards interactifs avec Tableau pour visualiser des dynamiques démographiques complexes. Il aurait pu être intéressant d'avoir des découpages géographiques plus intéressants/ plus fins de la part de l'ONU dans la nomenclature des unités territoriales statistiques (NUTS).
+
+**Othmane** :
+
+**Nicolas** :
+
+**Zakaria** :
+
 
 <a id="section-6"></a>
 
