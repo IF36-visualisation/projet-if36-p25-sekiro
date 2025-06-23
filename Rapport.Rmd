@@ -1204,6 +1204,23 @@ Le graphique met en évidence une forte corrélation positive entre le taux de m
 
 ## IV. Conclusion
 
+Ce projet d'analyse des données des "World Population Prospects" de l'ONU nous a offert une plongée dans les dynamiques démographiques mondiales actuelles. À travers l'exploration de ce riche jeu de données, nous avons pu identifier plusieurs tendances majeures :  
+
+1. **La grande transition démographique** se confirme avec des trajectoires divergentes : vieillissement accéléré des sociétés occidentales et asiatiques contrastant avec la jeunesse persistante de l'Afrique subsaharienne. L'âge médian mondial a augmenté de 10 ans depuis 1950, passant de 24 à 34 ans, avec des écarts allant de 15 ans au Niger à 48 ans au Japon.  
+
+2. **La corrélation entre développement et démographie** apparaît systématiquement : les pays à forte mortalité infantile (>50‰) maintiennent une fécondité élevée (TFR >4), tandis que les sociétés développées connaissent un effondrement de la natalité sous le seuil de renouvellement (1,5 enfants/femme en Europe).  
+
+3. **Le basculement démographique à venir** est spectaculaire : d'ici 2100, 7 des 10 plus fortes croissances démographiques seront africaines, avec la RDC en tête (+325 millions d'habitants). À l'inverse, près de 50 pays perdront plus de 15% de leur population.  
+
+**Difficultés rencontrées** :  
+L'hétérogénéité des sources historiques, particulièrement pour les pays en conflit, introduit des incertitudes. La projection des scénarios à l'horizon 2100 reste spéculative, vulnérable aux ruptures (pandémies, conflits, innovations). Le traitement des migrations internationales s'est révélé particulièrement complexe en raison des définitions variables entre pays et des 3 scénarios.  
+
+**Pistes d'approfondissement** :  
+- Analyser l'impact du changement climatique sur les migrations et la sécurité alimentaire  
+- Étudier le lien entre économique et démographie  
+- Explorer les données de fécondité désagrégées par niveau d'éducation  
+
+Ce travail confirme que la démographie n'est pas une fatalité ni une théorie sans faille et applicable pout tous mais le produit de choix politiques, économiques et sociaux des différents pays et régions.
 
 
 <a id="section-6"></a>
