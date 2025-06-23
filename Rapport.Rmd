@@ -10,7 +10,7 @@ output:
 
 ## Table des matières
 
-> [Introduction](#section-1) <br> [I. Données](#section-2) <br> [II. Plan d'analyse](#section-3) <br> [III. Exploration](#section-4) <br> [IV. Annexe](#section-5) <br>
+> [Introduction](#section-1) <br> [I. Données](#section-2) <br> [II. Plan d'analyse](#section-3) <br> [III. Exploration](#section-4) <br> [IV. Conclusion](#section-5) <br> [V. Annexe](#section-6) <br>
 
 <a id="section-1"></a>
 
@@ -419,7 +419,47 @@ Concernant la décroissance démographique, l’Ukraine présente une tendance i
 
 En conclusion, ces graphiques répondent bien à la question posée et permettent d'observer les évolutions démographiques mondiales entre 1950 et 2023. Ils mettent en lumière des pays ayant connu une croissance ou une décroissance démographique significative. Si l’on s’attendait à voir davantage de pays africains parmi les résultats, cela pourrait être dû à la période choisie. Une analyse sur des périodes plus récentes pourrait révéler des tendances démographiques plus marquées en Afrique.
 
-### 3. Quels sont les 10 pays avec les taux de mortalité infantile les plus faibles et les plus élevés en moyenne entre 2000 et 2023 ?
+### 3. Analyse comparative des trajectoires démographiques : Pays baltes et Liberia en lumière
+
+<video width="90%" controls style="display: block; margin: 0 auto;">
+  <source src="./Images/Tableau ‐ Réalisée avec Clipchamp.mp4" type="video/mp4">
+  Votre navigateur ne supporte pas la balise vidéo.
+</video>
+
+Dans le cadre de cette étude, une analyse comparative a été faite sur le logiciel Tableau sur les évolutions démographiques de deux groupes de pays très contrastés : les pays baltes – Estonie, Lettonie et Lituanie – et le Liberia , situé en Afrique de l’Ouest.
+Les dynamiques démographiques varient fortement selon les régions du monde. Certains pays connaissent une baisse continue de leur population , souvent liée au vieillissement ou à l’émigration, tandis que d’autres affichent une croissance soutenue , portée par une jeunesse démographique et un taux de fécondité élevé. À travers cette étude comparative, il s’agit d’explorer ces différences profondes entre deux groupes géographiques aux réalités contrastées.
+
+Pour répondre à cette question, plusieurs visualisations ont été construites sur un dashboard sous Tableau :
+
+- Une carte choroplèthe mondiale , colorée selon le taux de croissance démographique annuel , permettant d’identifier visuellement les zones de forte ou faible croissance ;
+- Un graphique linéaire illustrant l’évolution de la population totale entre 1950 et 2023 , avec une série distincte pour chaque pays sélectionné ;
+- Une mesure complémentaire a également été intégrée : la variation absolue de population, qui montre le nombre réel de personnes gagnées ou perdues chaque année ;
+- Un encard à gauche avec du texte dynamique sur la moyenne, minimum et maximum de la croissance selon les pays sélectionnés
+- Un filtre interactif au centre (qu'il est possible de replier) pour choisir un ou plusieurs pays et une date pour la carte;
+
+Sur le premier graphe est présent la France, un pays qui a connu une croissance linéaire (négative à l'image des autres pays occidentaux) sans accoup/chute notable à titre d'exemple.
+Depuis les années 1990, les trois pays baltes montrent une tendance commune : une baisse de leur population dont une chute brutale lors de la chute de l'URSS. Ce taux négatif l'est resté jusqu'à l'avant-dernière année du dataset (2022). Cette évolution s’explique par plusieurs facteurs. Globaux premièrement :
+- Une faible natalité , notamment due à l’émancipation féminine et à l’accès limité à des politiques familiales fortes ;
+- Un vieillissement rapide de la population , accentué par une espérance de vie relativement élevée mais sans compensation suffisante en termes de naissances
+Mais aussi des particularités unique à ces pays :
+- Une émigration importante, particulièrement vers la Russie lors de la chute et vers l’Union européenne après l’élargissement de 2004 ;
+- Une immigration forte en 2023, que l'on peut supposer russe et en moindre partie ukrainienne dû au début du conflit Ukraino-russe, qui pourrait expliquer une légère reprise temporaire
+
+Ces variations importantes ne reflètent pas nécessairement des mouvements naturels de natalité/mortalité, mais plutôt des facteurs socio-politiques majeurs.
+
+À l’inverse, le Liberia affiche une croissance démographique élevée, souvent supérieure à 2 % par an. Cependant la moyenne cache un pic notable en 1990. En valeur absolue, ce pic représente une baisse de 500 000 habitants , soit environ 20 % de la population totale en 1989 (estimée à 2,5 millions). Sur Tableau, cette baisse apparaît même plus importante (environ 30 %), ce qui soulève une question légitime : pourquoi ?
+La cause de cette chute de population est la Première guerre civile (1989-1990 principalement). Cette guerre (comme toutes les autres guerres, d'autant plus guerre civile) a eu plusieurs conséquences démographiques :
+Des pertes humaines directes dues aux combats ;
+Une augmentation de la mortalité infantile et maternelle ;
+Une déstabilisation administrative , empêchant un recensement précis des naissances ;
+Une émigration massive de la population civile vers les pays voisins ;
+Une diminution des naissances volontaires pendant la période de conflit ;
+Ces éléments expliquent à la fois la chute abrupte de la population et le rebond rapide l’année suivante , lorsque la situation s’est stabilisée.
+
+Cette étude comparative entre les pays baltes et le Liberia montre l’extrême hétérogénéité des trajectoires démographiques mondiales en proie à des défis venus de l'intérieur et de l'extérieur. Les outils de visualisation sous Tableau ont permis de voir ces différences de manière intuitive, grâce à une carte interactive et à un graphique linéaire comparatif.
+
+
+### 4. Quels sont les 10 pays avec les taux de mortalité infantile les plus faibles et les plus élevés en moyenne entre 2000 et 2023 ?
 
 Nous formulons l’hypothèse que le taux de mortalité infantile en 2023 est fortement corrélé au niveau de développement économique et sanitaire des pays.  
 Les pays en développement, notamment d’Afrique subsaharienne, devraient présenter des taux élevés en raison d’un accès limité aux soins médicaux, à la vaccination, et à une nutrition adéquate.  
@@ -494,7 +534,7 @@ Ces taux élevés traduisent des défis persistants en matière d’accès aux s
 Cet écart très marqué entre pays en développement et pays développés confirme notre hypothèse de départ : le niveau de développement économique, sanitaire et éducatif est un déterminant majeur du taux de mortalité infantile.  
 Ces résultats soulignent aussi l'importance des politiques publiques de santé dans la réduction des inégalités sanitaires à l'échelle mondiale.
 
-### 4. Quels sont les 10 pays représentant la plus forte part de la population mondiale en 2023 ?
+### 5. Quels sont les 10 pays représentant la plus forte part de la population mondiale en 2023 ?
 
 Nous formulons l’hypothèse que la distribution de la population mondiale en 2023 est fortement concentrée dans quelques grands pays à forte démographie.  
 Des pays comme la Chine, l’Inde, les États-Unis ou l’Indonésie devraient figurer parmi les principaux contributeurs à la population mondiale en raison de leur immense taille démographique historique et de leur dynamique de croissance soutenue.  
@@ -607,7 +647,7 @@ Cette forte concentration est le reflet de tendances historiques : natalité él
 
 
 
-### 5. Quels pays connaîtront la plus forte croissance démographique entre 2023 et 2100 ?
+### 6. Quels pays connaîtront la plus forte croissance démographique entre 2023 et 2100 ?
 
 Nous faisons l’hypothèse que les pays à plus forte croissance démographique d’ici 2100 seront majoritairement situés en **Afrique subsaharienne**, du fait d’un **taux de fécondité élevé**, d’une **population jeune**, et d’un **début de transition démographique plus récent**.  
 Ces pays bénéficient en effet d’une **dynamique de croissance naturelle importante**, combinée à une **amélioration progressive des conditions de vie** (santé, éducation, urbanisation).
@@ -748,7 +788,7 @@ Ce graphique confirme donc non seulement **l’ampleur des croissances prévues*
 En **conclusion**, cette **double analyse visuelle** met en lumière un **basculement potentiel de la carte démographique mondiale** au profit de l’**Afrique subsaharienne**.  
 Ces projections incitent à réfléchir dès aujourd’hui aux **politiques à adopter** pour **transformer cette croissance en levier de développement durable**.
 
-### 6. Quel est l'âge médian des populations par pays en 1950 et en 2023 ?
+### 7. Quel est l'âge médian des populations par pays en 1950 et en 2023 ?
 Dans cette partie, nous cherchons à comparer l'âge médian des populations entre 1950 et 2023.
 L’objectif est de visualiser le vieillissement démographique à l’échelle mondiale.
 Nous observons les différences entre les deux années à l’aide de cartes.
@@ -893,7 +933,7 @@ Certains pays comme le Tchad ou la République centrafricaine ont même vu leur 
 Même constat en Afghanistan, où l’âge médian semble avoir diminué sur la période.
 
 
-### 7. Évolution de l’espérance de vie à la naissance dans le monde (1950–2100)
+### 8. Évolution de l’espérance de vie à la naissance dans le monde (1950–2100)
 
 Nous avons émis l’hypothèse que l’espérance de vie à la naissance augmente de manière continue à l’échelle mondiale depuis 1950. Cette progression serait principalement due aux avancées médicales (vaccins, antibiotiques, chirurgie), à l’amélioration de l’hygiène, à la diminution de la mortalité infantile, à une meilleure nutrition, et plus largement, à la transition épidémiologique.
 Nous supposons également que cette croissance se poursuivra jusqu’en 2100, mais à un rythme ralenti, car les gains deviennent plus difficiles à mesure que l'on approche des limites biologiques humaines.
@@ -967,7 +1007,7 @@ En résumé, les projections de l’ONU valident pleinement notre hypothèse ini
 L’espérance de vie à la naissance a connu une augmentation rapide depuis 1950, et devrait continuer à progresser jusqu’en 2100, bien que plus lentement.
 
 
-### 8. Quels sont les 10 pays avec les soldes migratoires nets les plus élevés et les plus faibles entre 2000 et 2023 ?
+### 9. Quels sont les 10 pays avec les soldes migratoires nets les plus élevés et les plus faibles entre 2000 et 2023 ?
 Nous formulons l'hypothèse que les migrations internationales suivent des patterns économiques et géopolitiques clairs.  
 Les pays développés à forte croissance économique (États-Unis, Allemagne, pays du Golfe) devraient présenter des soldes migratoires positifs élevés, attirant une main-d'œuvre qualifiée et des populations en quête de meilleures opportunités.  
 À l'inverse, les pays en développement ou en situation de crise (conflits, instabilité économique) devraient afficher des soldes négatifs importants, traduisant une émigration nette de leur population.  
@@ -1085,7 +1125,7 @@ Le graphique révèle des patterns migratoires cohérents avec nos hypothèses d
 
 Cette analyse souligne le rôle central des inégalités de développement, des politiques migratoires et des événements géopolitiques dans la structuration des flux migratoires internationaux sur les deux dernières décennies.
 
-### 9. Existe-t-il une corrélation entre le taux de mortalité infantile et le taux de fécondité total (TFR) en 2023 ?
+### 10. Existe-t-il une corrélation entre le taux de mortalité infantile et le taux de fécondité total (TFR) en 2023 ?
 
 Nous formulons l'hypothèse qu'il existe une corrélation positive forte entre le taux de mortalité infantile et le taux de fécondité total.
 Cette hypothèse s'appuie sur la théorie de la transition démographique : dans les sociétés où la mortalité infantile est élevée, les familles tendent à avoir plus d'enfants pour compenser les risques de décès prématurés et assurer leur descendance.
@@ -1162,8 +1202,13 @@ Le graphique met en évidence une forte corrélation positive entre le taux de m
 
 <a id="section-5"></a>
 
-## IV. Annexe
+## IV. Conclusion
 
+
+
+<a id="section-6"></a>
+
+## V. Annexe
 Pour la réalisation de ce projet, nous nous sommes réparties les taches de la manière suivante : 
 
 * Tous les membres du groupe ont travaillé conjointement sur la rédaction de la proposition Read.Me.
