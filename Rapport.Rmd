@@ -422,7 +422,7 @@ En conclusion, ces graphiques répondent bien à la question posée et permetten
 ### 3. Analyse comparative des trajectoires démographiques : Pays baltes et Liberia en lumière
 
 <video width="90%" controls style="display: block; margin: 0 auto;">
-  <source src="./Images/Tableau ‐ Réalisée avec Clipchamp.mp4" type="video/mp4">
+  <source src="./Images/Tableau.mp4" type="video/mp4">
   Votre navigateur ne supporte pas la balise vidéo.
 </video>
 
@@ -1244,6 +1244,7 @@ Pour la réalisation de ce projet, nous nous sommes réparties les taches de la 
 	+ `Robin :` **1.** Comment le taux de fécondité total (TFR) a-t-il évolué entre 1950 et 2023 dans les cinq continents ?  
   
   + `Othmane :` **2.** Quels sont les 10 pays ayant connu les plus fortes croissances et décroissances démographiques entre 1950 et 2023 ?  
+ **Tableau** Focus sur les pays baltes et le Liberia `Robin`
   **6.** Quel est l'âge médian des populations par pays en 1950 et en 2023 ?  
   **ShinyApp**    
   + `Nicolas :` **3.** Quels sont les 10 pays avec les taux de mortalité infantile les plus faibles et les plus élevés en moyenne entre 2000 et 2023 ?
